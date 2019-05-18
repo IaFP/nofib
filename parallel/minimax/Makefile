@@ -9,7 +9,7 @@ SRCS = Board.hs \
        Main.hs
 SRC_DEPS = parallel random
 
-PROG_ARGS = 4 6
+PROG_ARGS += 4 6
 
 include $(TOP)/mk/target.mk
 

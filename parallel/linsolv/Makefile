@@ -6,7 +6,7 @@ SRC_DEPS = random parallel
 
 # 28 = version
 # 83 = input
-PROG_ARGS = 28 83
+PROG_ARGS += 28 83
 
 include $(TOP)/mk/target.mk
 

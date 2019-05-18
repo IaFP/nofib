@@ -14,7 +14,7 @@ SRC_HC_OPTS += -O0
 #   10 is about optimal for 7.1, greater degrades perf (less so for local-gc)
 # dummy = 999 (always)
 # delay = larger for 
-PROG_ARGS = 4 10 10 999 24
+PROG_ARGS += 4 10 10 999 24
 
 include $(TOP)/mk/target.mk
 

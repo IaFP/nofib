@@ -1,7 +1,7 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_RUNTEST_OPTS += +RTS -K1m -RTS
+PROG_ARGS += +RTS -K1m -RTS
 
 include $(TOP)/mk/target.mk
 
