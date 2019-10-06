@@ -59,7 +59,7 @@ endif
 # Create output to validate against
 
 revcomp-c : revcomp-c.o
-	gcc $< -o $@ -pthread
+	$(CC) $< -o $@ -pthread
 
 reverse-complement.faststdout : revcomp-c $(INPUT_FILE)
 	./revcomp-c < $(INPUT_FILE) | tr -d '\r' > $@
