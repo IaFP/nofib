@@ -383,7 +383,7 @@ constructor (SG sg) i j k
 
 {- Datatype elimination -}
 
-recurse tmL (TM (tm @ (Binder Pi (Symbol_dec tm1 _) _ _ _)) _ sg)
+recurse tmL (TM (tm@(Binder Pi (Symbol_dec tm1 _) _ _ _)) _ sg)
 	= if forall ok (zip tmL tyL)
 	       then
 		   TM (Recurse (map fst tmL) tm [] []) tm sg

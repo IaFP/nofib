@@ -152,7 +152,7 @@ eta_match dc tm i = error "VTS_ERROR" -- ** exn
 make_rec fntype clause_ty []
 	= clause_ty
 
-make_rec (fntype @ ( Binder Pi dc tm _ _)) clause_ty (ty:tyL)
+make_rec (fntype@( Binder Pi dc tm _ _)) clause_ty (ty:tyL)
 	= Binder Pi (Symbol_dec ty2 []) ty1 [] []
 	  where
 	  ty1 = make_rec (shift_trm [] 1 fntype) (shift_trm [] 1 clause_ty) tyL
@@ -163,10 +163,10 @@ make_rec (fntype @ ( Binder Pi dc tm _ _)) clause_ty (ty:tyL)
 
 
 
-gen_type i (fntype @(Binder Pi dc tm _ _)) rectypeL const []
+gen_type i (fntype@(Binder Pi dc tm _ _)) rectypeL const []
 	= make_rec fntype  (subst_trm dc tm const) rectypeL
 
-gen_type i (fntype @(Binder Pi dc tm _ _)) rectypeL const (ty : tyL)
+gen_type i (fntype@(Binder Pi dc tm _ _)) rectypeL const (ty : tyL)
 	= Binder Pi (Symbol_dec (shift_trm [] i ty) [])	ty1 [] []
 	  where
 	  const1    = App (shift_trm [] 1 const) (Sym 0 0 [] []) [] []

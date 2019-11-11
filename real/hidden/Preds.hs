@@ -17,7 +17,7 @@ p`onto`l | vertical l = proj(p)==proj(s(l))
 
 -- v `into` ls means that proj(v) is inside (including the border of) proj(ls).
 into :: Vector -> Plate -> Bool
-v`into`p @ (Plt _ ls)
+v`into`p@(Plt _ ls)
 	| vertical p  = or  [v`onto`l |l<-ls]
 	| otherwise   = and [a>=0| a<-zs] || and [a<=0| a<-zs]
 			where zs = [z ( (v-s(l)) * h(l) )| l<-ls]

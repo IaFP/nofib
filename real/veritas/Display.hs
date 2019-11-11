@@ -332,7 +332,7 @@ show_comment tr@(TreeSt t _ _)
 
 
 
-edit_comment tr @ (TreeSt t tl gst)
+edit_comment tr@(TreeSt t tl gst)
 	= x_form True [InComment "Edit Comment", InMultiText "Comment:" com] /./
 	  exp
 	  where

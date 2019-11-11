@@ -148,7 +148,7 @@ select_trm tm iL
 	  sel_trm (i:iL) (Binary' _ tm1 tm2 _ _) dcL
 		= sel_trm iL ([tm1,tm2]!!i) dcL
 
-	  sel_trm (i:iL) (Cond (dc @ (Axiom_dec tm inf)) tm1 tm2 _ _) dcL
+	  sel_trm (i:iL) (Cond (dc@(Axiom_dec tm inf)) tm1 tm2 _ _) dcL
 		| i==0 = sel_dec iL dc dcL
 		| i/=0 = sel_trm iL ([tm1,tm2]!!(i-1)) (dc1:dcL)
 	          	 where

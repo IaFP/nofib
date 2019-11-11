@@ -75,7 +75,7 @@ the roots of two binomial trees and makes the larger a child of the
 smaller (thus bumping its degree by one).  It is essential that this
 only be called on binomial trees of equal degree.
 
->link (a @ (Node x as)) (b @ (Node y bs)) =
+>link (a@(Node x as)) (b@(Node y bs)) =
 >  if x <= y then Node x (b:as) else Node y (a:bs)
 
 It will also be useful to extract the minimum element from a tree.

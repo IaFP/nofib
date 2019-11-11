@@ -289,13 +289,13 @@ extract_dc i dc
 	  where
 	  extract :: Int -> IDec -> [IDec] -> IDec
 
-	  extract 0 (dc @ (Symbol_dec _ _)) _ = dc
+	  extract 0 (dc@(Symbol_dec _ _)) _ = dc
 	
-      	  extract 0 (dc @ (Axiom_dec  _ _)) _ = dc
+      	  extract 0 (dc@(Axiom_dec  _ _)) _ = dc
 
-      	  extract 0 (dc @ (Def _ _ _)) _ = dc
+      	  extract 0 (dc@(Def _ _ _)) _ = dc
 	
-      	  extract 0 (dc @ (Data _ _ _)) _ = dc
+      	  extract 0 (dc@(Data _ _ _)) _ = dc
 
 --    	  extract 0 _ _ = error "BadIndex" -- ** exn
 
@@ -379,7 +379,7 @@ typ_of_dec (Symbol_dec tm _) = tm
 
 typ_of_dec (Axiom_dec tm _) = tm
 
-typ_of_dec (dc @ (Decpair dc1 dc2 _))
+typ_of_dec (dc@(Decpair dc1 dc2 _))
 	= if is_sym_dec dc
 		then Binder Sigma dc1 (typ_of_dec dc2) [] []
 	        else if is_axm_dec dc
@@ -410,7 +410,7 @@ mk_fnspace tm1 tm2
 mk_sms (Symbol_dec _ _) i j
 	= (Sym i j [] [] , j+1)
 
-mk_sms (dc @ (Decpair dc1 dc2 _)) i j
+mk_sms (dc@(Decpair dc1 dc2 _)) i j
 	= (Pair sms1 sms2 (typ_of_dec dc) [] [] , j2)
 	  where
 	  (sms1, j1) = mk_sms dc1 i (j+1)

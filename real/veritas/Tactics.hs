@@ -106,7 +106,7 @@ lift_tactic_valid _ _ t = t
 
 
 
-lift_ordtactic_valid vf gst t @(Tree g tl NONE vf' u)
+lift_ordtactic_valid vf gst t@(Tree g tl NONE vf' u)
 	= Tree g tl' dn vf' u
 --	    handle _ => t
 	  where
