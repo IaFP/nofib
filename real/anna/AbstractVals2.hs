@@ -295,16 +295,16 @@ avBelowEQrep (Rep2 lf1 mf1 hfs1) (Rep2 lf2 mf2 hfs2)
 --
 (\/) :: Route -> Route -> Route
 
-p@ Zero        \/  q              = q
-p@ One         \/  q              = p
+p@Zero         \/  q              = q
+p@One          \/  q              = p
 
-p@ Stop1       \/  q              = q
+p@Stop1        \/  q              = q
 p@(Up1 rs1)    \/  Stop1          = p
 p@(Up1 rs1)    \/  Up1 rs2        = Up1 (myZipWith2 (\/) rs1 rs2)
 
-p@ Stop2       \/  q              = q
-p@ Up2         \/  Stop2          = p
-p@ Up2         \/  q              = q
+p@Stop2        \/  q              = q
+p@Up2          \/  Stop2          = p
+p@Up2          \/  q              = q
 p@(UpUp2 rs1)  \/  UpUp2 rs2      = UpUp2 (myZipWith2 (\/) rs1 rs2)
 p@(UpUp2 rs1)  \/  q              = p
 
@@ -361,16 +361,16 @@ avLUBmax0frontier f0a f0b
 --
 (/\) :: Route -> Route -> Route
 
-p@ Zero        /\  q                = p
-p@ One         /\  q                = q
+p@Zero         /\  q                = p
+p@One          /\  q                = q
 
-p@ Stop1       /\  q                = p
+p@Stop1        /\  q                = p
 p@(Up1 rs1)    /\  (Up1 rs2)        = Up1 (myZipWith2 (/\) rs1 rs2)
 p@(Up1 rs1)    /\  q                = q
 
-p@ Stop2       /\  q                = p
-p@ Up2         /\  q@ Stop2         = q
-p@ Up2         /\  q                = p
+p@Stop2        /\  q                = p
+p@Up2          /\  q@Stop2          = q
+p@Up2          /\  q                = p
 p@(UpUp2 rs1)  /\  q@(UpUp2 rs2)    = UpUp2 (myZipWith2 (/\) rs1 rs2)
 p@(UpUp2 rs1)  /\  q                = q
 

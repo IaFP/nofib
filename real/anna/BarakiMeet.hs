@@ -23,10 +23,10 @@ infix 9 %%
 bmNorm :: Domain -> Route -> Route
 
 bmNorm Two         r              =  r
-bmNorm (Lift1 ds)  r@ Stop1       =  r
+bmNorm (Lift1 ds)  r@Stop1        =  r
 bmNorm (Lift1 ds)    (Up1 rs)     =  Up1 (myZipWith2 bmNorm ds rs)
-bmNorm (Lift2 ds)  r@ Stop2       =  r
-bmNorm (Lift2 ds)  r@ Up2         =  r
+bmNorm (Lift2 ds)  r@Stop2        =  r
+bmNorm (Lift2 ds)  r@Up2          =  r
 bmNorm (Lift2 ds)    (UpUp2 rs)   =  UpUp2 (myZipWith2 bmNorm ds rs)
 bmNorm d             (Rep rep)    =  Rep (bmNorm_rep d rep)
 
