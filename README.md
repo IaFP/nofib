@@ -149,7 +149,9 @@ Optionally combine this with `mode=fast`, see [Modes](#modes).
 
 Some benchmarks aren't run by default and require extra packages are
 installed for the GHC compiler being tested. These packages include:
- * stm - for smp benchmarks
+
+ * `old-time`: for `gc` benchmarks
+ * `stm`: for smp benchmarks
 
 ## Adding benchmarks
 
