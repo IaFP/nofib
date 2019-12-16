@@ -210,12 +210,22 @@ Gen 1 heaps just amplifies the problem.
 As a rule of thumb on how to ensure this: Make sure that your benchmark doesn't
 just build up one big data and consume it in a final step, but rather that the
 working set grows and shrinks (e.g. is approximately constant) over the whole
-run of the benchmark. You can ensure this by iterating your main logic $n times
-(how often depends on your program, but in the ball park of 100-1000).
+run of the benchmark. You can ensure this by iterating your main logic `$n` 
+times (how often depends on your program, but in the ball park of 100-1000).
 You can test stability by plotting productivity curves for your `fast` settings
 with the `prod.py` script attached to #15999.
 
 If in doubt, ask Sebastian Graf for help.
+
+## Important notes
+
+Note that some of these tests (e.g. `spectral/fish`) tend to be very sensitive
+to branch predictor effectiveness. This means that changes in the compiler
+can easily be masked by "random" fluctuations in the code layout produced by
+particular compiler runs. Recent GHC versions provide the `-fproc-alignment`
+flag to pad procedures, ensuring slightly better stability across runs. If you
+are seeing an unexpected change in performance try adding `-fproc-alignment=64`
+the compiler flags of both your baseline and test tree.
 
 ## easy.sh
 
