@@ -152,6 +152,14 @@ installed for the GHC compiler being tested. These packages include:
 
  * `old-time`: for `gc` benchmarks
  * `stm`: for smp benchmarks
+ * `parallel`: for parallel benchmarks
+ * `random`: for various benchmarks
+
+These can be installed with
+
+```
+cabal v1-install --allow-newer -w $HC random parallel old-time
+````
 
 ## Adding benchmarks
 
