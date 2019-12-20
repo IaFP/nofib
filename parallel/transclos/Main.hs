@@ -75,8 +75,8 @@ main = do
 #elif defined(TRANSCL_SET)
          let zs  = Data.Set.toList $ {- take n $ -} transcl_set  rel_set (Data.Set.fromList seeds)   -- set-based  with 1-to-n rel
 #else
-	 let zs  = {- take n $ -} transcl      rel_list seeds -- default: seq, circular, with a 1-to-n list-based relation
-	 -- unused versions
+         let zs  = {- take n $ -} transcl      rel_list seeds -- default: seq, circular, with a 1-to-n list-based relation
+         -- unused versions
          -- let zs  = {- take n $ -} transcl_dup  rel_one seeds   -- no elim of duplicates; good parallelism but stupid
          -- let zs  = {- take n $ -} transcl_simp rel_one seeds       -- list-based with 1-to-1 rel
 #endif
@@ -87,9 +87,9 @@ main = do
                  3 -> (\ _ -> parListChunkN z n rnf (drop (length seeds) zs), "parListChunkN with blocksize z = "++(show z)++" and length n = "++(show n))
                  -}
                  4 -> (\ _ -> error "parBuffer'  ", "parBuffer with buffer size "++(show n))
-		 -- 5 -> (\ _ -> parBufferLChunk n z (ins rnf) (drop (length seeds) zs), "parBufferLChunk with buffer size "++(show n)++" chunk size size "++(show z))
-		 -- 6 -> (\ _ -> parBufferQChunk n z (ins rnf) (drop (length seeds) zs), "parBufferQChunk with buffer size "++(show n)++" chunk size size "++(show z))
-		 -- 7 -> (\ _ -> parBufferAChunk n z (ins rnf) (drop (length seeds) zs), "parBufferAChunk with buffer size "++(show n)++" chunk size size "++(show z))
+                 -- 5 -> (\ _ -> parBufferLChunk n z (ins rnf) (drop (length seeds) zs), "parBufferLChunk with buffer size "++(show n)++" chunk size size "++(show z))
+                 -- 6 -> (\ _ -> parBufferQChunk n z (ins rnf) (drop (length seeds) zs), "parBufferQChunk with buffer size "++(show n)++" chunk size size "++(show z))
+                 -- 7 -> (\ _ -> parBufferAChunk n z (ins rnf) (drop (length seeds) zs), "parBufferAChunk with buffer size "++(show n)++" chunk size size "++(show z))
                  -- 10 -> (\ _ -> parBufferChunk_ z n rnf (drop (length seeds) zs), "parBufferChunk with buffer size "++(show n)++" chunk size size "++(show z))
                  -- 11 -> (\ _ -> evalBufferChunk z n (rpar `dot` seqList rnf) (drop (length seeds) zs), "evalBufferChunk with buffer size "++(show n)++" chunk size size "++(show z))
                  -- 12 -> (\ _ -> parBufferLSliceChunk n z z (rpar `dot` seqList (ins rnf)) (drop (length seeds) zs), "parBufferLSliceChunk with buffer size "++(show n)++" stride "++(show z)++" chunk size "++(show z))
