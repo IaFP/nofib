@@ -1,8 +1,7 @@
 TOP = ../../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -fglasgow-exts
-SRC_DEPS = transformers mtl
+SRC_DEPS = mtl
 
 include $(TOP)/mk/target.mk
 
