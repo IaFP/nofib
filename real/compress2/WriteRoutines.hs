@@ -1,3 +1,5 @@
+{-# LANGUAGE MagicHash #-}
+
 module WriteRoutines (outputCodes)
 where
 
