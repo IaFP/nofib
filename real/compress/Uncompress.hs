@@ -13,11 +13,11 @@
 module Uncompress (main) where
 
 import Defaults
-import BinConv	  -- binary conversion routines
+import BinConv          -- binary conversion routines
 import Decode     -- decoding routines
 
 main = getContents >>= \ inp ->
-	putStr (uncompress inp)
+        putStr (uncompress inp)
 
 {- To uncompress a string we first convert the characters to n-bit binaries
  - and then to decimals which can then be decoded.

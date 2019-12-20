@@ -108,8 +108,8 @@ lzw_code_file [] code_table next_code = [];
 lzw_code_file input code_table next_code
     =   -- partain: case-ified lazy where
       case (code_string input ILIT(0) next_code code_table) of {
-	_TRIP_(input2,n,code_table2) ->
-	    IBOX(n) : lzw_code_file input2 code_table2 (next_code _ADD_ ILIT(1))
+        _TRIP_(input2,n,code_table2) ->
+            IBOX(n) : lzw_code_file input2 code_table2 (next_code _ADD_ ILIT(1))
       };
 
 code_string :: [Char] -> FAST_INT -> FAST_INT -> PrefixTree -> FAST_TRIPLE;
@@ -163,7 +163,7 @@ integer_list_to_char_list [] = [];
 
     integer_list_to_char_list2 (IBOX(c) : l) n
         =   CBOX(_CHR_ ((n _MUL_ ILIT(16)) _ADD_ ((c _QUOT_ ILIT(256)) _REM_ ILIT(16))))
-	    : CBOX(_CHR_ c)
+            : CBOX(_CHR_ c)
             : integer_list_to_char_list l;
     integer_list_to_char_list2 [] n = CBOX(_CHR_ (n _MUL_ ILIT(16))) : [];
 

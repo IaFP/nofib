@@ -14,7 +14,7 @@
 module Main (main) where
 
 import Defaults
-import BinConv	  -- binary conversion routines
+import BinConv          -- binary conversion routines
 import Encode     -- coding routine
 import Control.Monad
 import System.IO

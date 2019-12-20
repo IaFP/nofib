@@ -32,23 +32,23 @@ dec_to_bin' x
 codes_to_ascii :: [Int] -> [Int]
 codes_to_ascii [] = []
 codes_to_ascii (x:y:ns)
-	= x_div : ((x_rem * 16) + y_div) : y_rem : codes_to_ascii ns
+        = x_div : ((x_rem * 16) + y_div) : y_rem : codes_to_ascii ns
           where
           (x_div, x_rem) = divRem x 16
           (y_div, y_rem) = divRem y 256
 codes_to_ascii [n]
-	= [x_div , x_rem]
+        = [x_div , x_rem]
           where
           (x_div, x_rem) = divRem n 16
 
 ascii_to_codes [] = []
 ascii_to_codes (x:y:z:ns)
-	= (x * 16) + y_div : (y_rem * 256) + z : ascii_to_codes ns
-	  where
-	  (y_div, y_rem) = divRem y 16
+        = (x * 16) + y_div : (y_rem * 256) + z : ascii_to_codes ns
+          where
+          (y_div, y_rem) = divRem y 16
 ascii_to_codes [x,y]
-	= [(x * 16) + y_rem]
-	  where
-	  (y_div, y_rem) = divRem y 16
+        = [(x * 16) + y_rem]
+          where
+          (y_div, y_rem) = divRem y 16
 
 divRem x y = (x `div` y, x `rem` y) -- missing from PreludeCore ?
