@@ -1,7 +1,6 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -cpp
 SRC_DEPS = old-time
 
 # kLongLivedTreeDepth	  = 17 :: Int
