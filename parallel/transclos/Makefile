@@ -1,7 +1,7 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -cpp -DSTRATEGIES -DTRANSCL_NESTED
+SRC_HC_OPTS += -DSTRATEGIES -DTRANSCL_NESTED
 SRC_DEPS = random parallel containers
 
 # XXX: only speeds up without optimisation.  This is bad.  Could be

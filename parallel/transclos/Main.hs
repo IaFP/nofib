@@ -1,4 +1,4 @@
-{-# OPTIONS_GHC -XFlexibleInstances -XBangPatterns #-}
+{-# LANGUAGE CPP, FlexibleInstances, BangPatterns #-}
 -- Time-stamp: <2010-11-03 12:01:15 simonmar>
 --
 -- Test wrapper for (parallel) transitive closure computation.
