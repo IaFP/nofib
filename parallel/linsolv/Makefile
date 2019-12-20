@@ -1,7 +1,8 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -cpp -DSTRATEGIES -package random -package parallel
+SRC_HC_OPTS += -cpp -DSTRATEGIES
+SRC_DEPS = random parallel
 
 # 28 = version
 # 83 = input

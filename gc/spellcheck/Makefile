@@ -7,7 +7,7 @@ all boot :: input
 input : words
 	cat words words words words words words words words words words >$@
 
-SRC_HC_OPTS += -package containers
+SRC_DEPS = containers
 NORM_OPTS = words input
 
 ifeq "$(HEAP)" "LARGE"

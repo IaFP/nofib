@@ -7,6 +7,6 @@ include $(TOP)/mk/boilerplate.mk
 # This version builds a list of the results, and needs a lot of memory:
 SRC_RUNTEST_OPTS += 3 873
 
-SRC_HC_OPTS += -package parallel
+SRC_DEPS = parallel
 
 include $(TOP)/mk/target.mk

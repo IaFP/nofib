@@ -1,5 +1,5 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 -include opts.mk
-SRC_HC_OPTS += -package random
+SRC_DEPS = random
 include $(TOP)/mk/target.mk

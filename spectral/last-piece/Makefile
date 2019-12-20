@@ -1,7 +1,7 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -package containers -package pretty
+SRC_DEPS = containers pretty
 
 include $(TOP)/mk/target.mk
 

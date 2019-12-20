@@ -3,11 +3,11 @@ include $(TOP)/mk/boilerplate.mk
 
 SRCS = Board.hs \
        Game.hs \
-		 Prog.hs \
-		 Tree.hs \
-		 Wins.hs \
-		 Main.hs
-HC_OPTS += -package parallel -package random
+       Prog.hs \
+       Tree.hs \
+       Wins.hs \
+       Main.hs
+SRC_DEPS = parallel random
 
 PROG_ARGS = 4 6
 

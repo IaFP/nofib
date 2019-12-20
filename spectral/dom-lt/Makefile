@@ -13,5 +13,4 @@ FAST_OPTS = ghc-examples.in 50
 NORM_OPTS = ghc-examples.in 400
 SLOW_OPTS = ghc-examples.in 1800
 
-# We require containers.
-HC_OPTS += -package containers
+SRC_DEPS = containers

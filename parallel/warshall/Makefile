@@ -14,6 +14,6 @@ TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
 SRC_RUNTEST_OPTS += 400 400
-SRC_HC_OPTS += -package parallel
+SRC_DEPS = parallel
 
 include $(TOP)/mk/target.mk

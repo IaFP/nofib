@@ -1,7 +1,8 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -cpp -DSTRATEGIES -DTRANSCL_NESTED -package random -package parallel -package containers
+SRC_HC_OPTS += -cpp -DSTRATEGIES -DTRANSCL_NESTED
+SRC_DEPS = random parallel containers
 
 # XXX: only speeds up without optimisation.  This is bad.  Could be
 # due to the nfib delay mucking up load-balancing.

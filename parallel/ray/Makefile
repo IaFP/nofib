@@ -2,7 +2,7 @@ TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
 PROG_ARGS = 1000
-SRC_HC_OPTS += -package parallel
+SRC_DEPS = parallel
 
 include $(TOP)/mk/target.mk
 

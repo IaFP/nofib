@@ -3,8 +3,8 @@ include $(TOP)/mk/boilerplate.mk
 
 NORM_OPTS = 300000
 
-SRC_HC_OPTS += -package array
 SRC_RUNTEST_OPTS += +RTS -K64m -RTS
+SRC_DEPS = array
 
 ifeq "$(HEAP)" "LARGE"
 SRC_RUNTEST_OPTS += +RTS -H128m -RTS

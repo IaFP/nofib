@@ -1,7 +1,7 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -package transformers
+SRC_DEPS = transformers
 
 include $(TOP)/mk/target.mk
 
