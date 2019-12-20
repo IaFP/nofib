@@ -1,3 +1,6 @@
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE MagicHash #-}
+
 module Main (main) -- parstof
 where {
     import Control.Monad (replicateM_);

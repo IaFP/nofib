@@ -1,3 +1,6 @@
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE MagicHash #-}
+
 module Main (main) -- listcopy
 where {
     import System.Environment (getArgs);
