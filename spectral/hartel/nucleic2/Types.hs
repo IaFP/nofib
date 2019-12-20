@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 #include "unboxery.h"
 
 module Types where

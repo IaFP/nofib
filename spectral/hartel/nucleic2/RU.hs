@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 #include "unboxery.h"
 
 module RU(rU,rUs,rU') where

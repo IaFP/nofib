@@ -1,3 +1,6 @@
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE MagicHash #-}
+
 #include "unboxery.h"
 
 #ifdef USE_GLASGOW_HACKS

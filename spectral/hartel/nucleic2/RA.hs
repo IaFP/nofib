@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 #include "unboxery.h"
 
 module RA(rA,rAs) where
