@@ -1,4 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
+{-# OPTIONS_GHC -funbox-strict-fields #-}
 --
 -- The Computer Language Benchmarks Game
 -- http://benchmarksgame.alioth.debian.org/
