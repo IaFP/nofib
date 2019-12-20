@@ -5,6 +5,7 @@ http://benchmarksgame.alioth.debian.org/
 contributed by Louis Wasserman
 -}
 {-# LANGUAGE BangPatterns, MagicHash, UnboxedTuples #-}
+{-# OPTIONS_GHC -funfolding-use-threshold=32 #-}
 
 import Control.Monad
 import Foreign
