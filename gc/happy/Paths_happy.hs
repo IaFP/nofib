@@ -1,8 +1,8 @@
 module Paths_happy (
-	version,
-	getBinDir, getLibDir, getDataDir, getLibexecDir,
-	getDataFileName
-	) where
+        version,
+        getBinDir, getLibDir, getDataDir, getLibexecDir,
+        getDataFileName
+        ) where
 
 import Data.Version
 
