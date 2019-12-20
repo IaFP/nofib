@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 module Set (
    Set, null, member, empty, singleton,
    union, difference, filter, fold,
