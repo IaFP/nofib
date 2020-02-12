@@ -10,6 +10,8 @@ perf.data
 perf.data.*
 dist-newstyle/
 .ghc.environment.*
+_make
+tags
 
 # Specific generated files
 nofib-analyse/nofib-analyse

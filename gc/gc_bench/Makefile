@@ -1,7 +1,7 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_DEPS = old-time
+SRC_DEPS = old-time array
 
 # kLongLivedTreeDepth	  = 17 :: Int
 # kArraySize	 	     = 500000 :: Int

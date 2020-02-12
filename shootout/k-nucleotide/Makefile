@@ -1,8 +1,8 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-# These values are only used in this file. They are ignored by the
-# executable itself.
+# These values are only used in this file and boot.sh.
+# They are ignored by the executable itself.
 FAST_OPTS =   60000
 NORM_OPTS =  600000
 SLOW_OPTS = 3000000
@@ -19,17 +19,17 @@ SRC_DEPS = bytestring
 #------------------------------------------------------------------
 # Create input
 
-fasta-c : ../fasta/fasta-c.c
-	$(CC) -std=gnu99 -O3 -fomit-frame-pointer $< -o $@
+# fasta-c : ../fasta/fasta-c.c
+# 	$(CC) -std=gnu99 -O3 -fomit-frame-pointer $< -o $@
 
-k-nucleotide.faststdin : fasta-c
-	./fasta-c $(FAST_OPTS) | tr -d '\r' > $@
+# k-nucleotide.faststdin : fasta-c
+# 	./fasta-c $(FAST_OPTS) | tr -d '\r' > $@
 
-k-nucleotide.stdin : fasta-c
-	./fasta-c $(NORM_OPTS) | tr -d '\r' > $@
+# k-nucleotide.stdin : fasta-c
+# 	./fasta-c $(NORM_OPTS) | tr -d '\r' > $@
 
-k-nucleotide.slowstdin : fasta-c
-	./fasta-c $(SLOW_OPTS) | tr -d '\r' > $@
+# k-nucleotide.slowstdin : fasta-c
+# 	./fasta-c $(SLOW_OPTS) | tr -d '\r' > $@
 
 # Since we only decide here what the INPUT_FILE is, it's required to first run
 # `make boot` and only than `make` (otherwise `make` doesn't "see" the file and
@@ -45,5 +45,14 @@ else
 endif
 
 boot :: $(INPUT_FILE)
+
+k-nucleotide.faststdin : boot.sh ../fasta/fasta-c.c
+	./boot.sh . . ${HC} $(mode)
+
+k-nucleotide.stdin : boot.sh ../fasta/fasta-c.c
+	./boot.sh . . ${HC} $(mode)
+
+k-nucleotide.slowstdin : boot.sh ../fasta/fasta-c.c
+	./boot.sh . . ${HC} $(mode)
 
 include $(TOP)/mk/target.mk

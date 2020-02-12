@@ -1,0 +1,6 @@
+packages: shake
+
+-- source-repository-package
+--    type: git
+--    location: https://github.com/bgamari/tabular
+--    tag: 204b01f63dec6bf0e0aba2862c71e77b2ec3909b
