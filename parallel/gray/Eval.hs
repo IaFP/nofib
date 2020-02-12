@@ -35,6 +35,8 @@ instance Applicative Pure where
 instance Monad Pure where
     Pure x >>= k = k x
     return       = Pure
+
+instance MonadFail Pure where
     fail s       = error s
 
 instance MonadEval Pure where
@@ -313,6 +315,8 @@ instance Monad Abs where
                                    AbsState r s' -> runAbs (k r) s'
                                    AbsFail m     -> AbsFail m)
     return       = pure
+
+instance MonadFail Abs where
     fail s       = Abs (\ n -> AbsFail s)
 
 instance MonadEval Abs where
