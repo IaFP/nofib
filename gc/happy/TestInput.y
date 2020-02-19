@@ -18,7 +18,7 @@ module Parser ( parseModule, parseStmt, parseIdentifier, parseType,
 
 import GHC.Hs
 import RdrHsSyn
-import HscTypes		( IsBootInterface, DeprecTxt )
+import GHC.Driver.Types	( IsBootInterface, DeprecTxt )
 import Lexer
 import RdrName
 import TysWiredIn	( unitTyCon, unitDataCon, tupleTyCon, tupleCon, nilDataCon,
