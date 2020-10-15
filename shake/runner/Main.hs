@@ -448,7 +448,8 @@ buildRules nofib@Build{..} = do
         out' <- liftIO $ IO.canonicalizePath out
         let test = testFromResultTsv nofib resultsTsv
         let wrapper_args n = ["valgrind", "--tool=cachegrind"] <> cachegrind_args <>
-                                [("--cachegrind-out-file="<>out'<.>show n)]
+                                [ ("--cachegrind-out-file="<>out'<.>show n)
+                                , "--log-file=cachegrind.log"]
         let parse_cachegrind n = do
                 stats <- CachegrindParse.parse (out' <.> show n)
                 return $ Ms.fromList
