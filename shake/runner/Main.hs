@@ -444,14 +444,18 @@ buildRules nofib@Build{..} = do
         runTest nofib (ModeWrapped args parse_perf) resultsTsv
 
     -- Run tests under cachegrind
-    ["//Main.cachegrind.result", "//Main.cachegrind.results.tsv"] &%> \[out, resultsTsv] -> do
-        out' <- liftIO $ IO.canonicalizePath out
+    ["//Main.cachegrind.results.tsv"] &%> \[resultsTsv] -> do
+        out' <- liftIO $ IO.canonicalizePath resultsTsv
         let test = testFromResultTsv nofib resultsTsv
-        let wrapper_args n = ["valgrind", "--tool=cachegrind"] <> cachegrind_args <>
-                                [ ("--cachegrind-out-file="<>out'<.>show n)
-                                , "--log-file=cachegrind.log"]
+        let cachegrindOut n = FP.replaceFileName out' ("Main.cachegrind.result" <.> show n)
+        let wrapper_args n =
+              ["valgrind", "--tool=cachegrind"] <> cachegrind_args <>
+              [ "--cachegrind-out-file="<>cachegrindOut n
+              , "--log-file=cachegrind.log"
+              ]
+
         let parse_cachegrind n = do
-                stats <- CachegrindParse.parse (out' <.> show n)
+                stats <- CachegrindParse.parse (cachegrindOut n)
                 return $ Ms.fromList
                     [ (testLabel test <> ml "run" <> ml "cachegrind" <> lbl, realToFrac v)
                     | (eventName, v) <- M.toList stats
