@@ -428,12 +428,13 @@ buildRules nofib@Build{..} = do
         runTest nofib ModeRun resultsTsv
 
     -- Run tests under perf stat
-    ["//Main.perf.results.tsv"] &%> \[out, resultsTsv] -> do
-        out' <- liftIO $ IO.canonicalizePath out
+    ["//Main.perf.results.tsv"] &%> \[resultsTsv] -> do
+        out' <- liftIO $ IO.canonicalizePath resultsTsv
+        let resultN n = FP.replaceFileName out' ("Main.perf.result" <.> show n)
         let test = testFromResultTsv nofib resultsTsv
-        let args n = ["perf", "stat"] <> perf_args <> ["-x,", ("--output="<>out' <.> show n), "--"]
+        let args n = ["perf", "stat"] <> perf_args <> ["-x,", ("--output="<>resultN n), "--"]
         let parse_perf n = do
-                stats <- PerfStatParse.readPerfStat (out' <.> show n)
+                stats <- PerfStatParse.readPerfStat (resultN n)
                 return $ Ms.fromList
                     [ (testLabel test <> ml "run" <> ml "perf" <> lbl, v)
                     | (eventName, vs) <- M.toList stats
