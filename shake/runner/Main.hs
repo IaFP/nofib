@@ -428,7 +428,7 @@ buildRules nofib@Build{..} = do
         runTest nofib ModeRun resultsTsv
 
     -- Run tests under perf stat
-    ["//Main.perf.result", "//Main.perf.results.tsv"] &%> \[out, resultsTsv] -> do
+    ["//Main.perf.results.tsv"] &%> \[out, resultsTsv] -> do
         out' <- liftIO $ IO.canonicalizePath out
         let test = testFromResultTsv nofib resultsTsv
         let args n = ["perf", "stat"] <> perf_args <> ["-x,", ("--output="<>out' <.> show n), "--"]
