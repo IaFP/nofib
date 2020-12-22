@@ -147,6 +147,12 @@ withColor opts c s
 showGFloat' :: RealFloat a => OutputOptions -> Maybe Int -> a -> ShowS
 showGFloat' opts prec x = prettySign opts x . showGFloat prec (abs x)
 
+showGFloatAbsolute :: RealFloat a => OutputOptions -> Maybe Int -> a -> ShowS
+showGFloatAbsolute opts prec x
+  | signum x < 0 = prettySign opts x . showGFloat prec (abs x)
+  | otherwise    = showGFloat prec (abs x)
+
+
 prettySign :: (Ord a, Num a) => OutputOptions -> a -> ShowS
 prettySign opts x
   | x < 0 = if fancyChars opts then showChar '−' else showChar '-'
@@ -318,7 +324,7 @@ data Cell = CellPctChange (ValueBaseline Double)
 showCell :: OutputOptions -> Cell -> ShowS
 showCell opts (CellPctChange vb)  = showString $ showPercent opts vb
 showCell opts  CellMissing        = showChar '∙'
-showCell opts (CellAbsolute x)    = showGFloat' opts (Just 3) x
+showCell opts (CellAbsolute x)    = showGFloatAbsolute opts (Just 3) x
 showCell opts (CellStderrRel ms)  = showGFloat (Just 1) (msStddev ms / msMean ms * 100) . showChar '%'
 
 baseTable :: M.Map rh (M.Map MetricFile (MeanStddev Double))
