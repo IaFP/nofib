@@ -6,13 +6,6 @@ variety of compile- and run-time metrics. These metrics are recorded in a
 common semi-structured CSV file format, which can be compared and analysed with
 the included `nofib-compare` utility.
 
-## Preparation
-
-The nofib benchmarks require that a number of native dependencies be installed
-in the tested compilers user or global package database. To install these:
-```
-$ cabal v1-install --allow-newer -w /path/to/ghc old-time stm parallel random
-```
 
 ## Usage
 
