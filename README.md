@@ -1,165 +1,17 @@
 # NoFib: Haskell Benchmark Suite
 
-This is the root directory of the "NoFib Haskell benchmark suite". It
-should be part of a GHC source tree, that is the 'nofib' directory
-should be at the same level in the tree as 'compiler' and 'libraries'.
-This makes sure that NoFib picks up the stage 2 compiler from the
-surrounding GHC source tree.
+This is the root directory of the "NoFib Haskell benchmark suite".
+There are currently two means of running the `nofib` benchmarks:
 
-You can also clone this repository in isolation, in which case it will
-pick `$(which ghc)` or whatever the `HC` environment variable is set to.
+ * [the `shake`-based build system](shake/README.mkd)
+ * [the legacy `make`-based build system](README.make.mkd)
+
+Users are generally encouraged to use the former when possible. See the linked
+READMEs for usage instructions.
 
 Additional information can also be found on
-[NoFib's wiki page](https://ghc.haskell.org/trac/ghc/wiki/Building/RunningNoFib).
+[NoFib's wiki page](https://gitlab.haskell.org/ghc/ghc/-/wikis/building/running-nofib).
 
-There's also a `easy.sh` helper script, which as name implies, is
-automated and easy way to run `nofib`.
-See the section at the end of README for its usage.
-
-## Using
-
-<details>
-  <summary>Git symlink support for Windows machines</summary>
-
-  NoFib uses a few symlinks here and there to share code between benchmarks.
-  Git for Windows has symlinks support for some time now, but
-  [it may not be enabled by default](https://stackoverflow.com/a/42137273/388010).
-  You will notice strange `make boot` failures if it's not enabled for you.
-
-  Make sure you follow the instructions in the link to enable symlink support,
-  possibly as simple as through `git config core.symlinks true` or cloning with
-  `git clone -c core.symlinks=true <URL>`.
-</details>
-
-Install [`cabal-install-2.4`](https://www.haskell.org/cabal/download.html) or later.
-
-Then, to run the tests, execute:
-
-```
-$ make clean # or git clean -fxd, it's faster
-$ # Generates input files for the benchmarks and builds compilation
-$ # dependencies for make (ghc -M)
-$ make boot
-$ # Builds the benchmarks and runs them $NoFibRuns (default: 5) times
-$ make
-```
-
-This will put the results in the file `nofib-log`. You can pass extra
-options to a nofib run using the `EXTRA_HC_OPTS` variable like this:
-
-```
-$ make clean
-$ make boot
-$ make EXTRA_HC_OPTS="-fllvm"
-```
-
-**Note:** to get all the results, you have to `clean` and `boot` between
-separate `nofib` runs.
-
-To compare the results of multiple runs, save the output in a logfile
-and use the program in `./nofib-analyse/nofib-analyse`, for example:
-
-```
-...
-$ make 2>&1 | tee nofib-log-6.4.2
-...
-$ make 2>&1 | tee nofib-log-6.6
-$ nofib-analyse nofib-log-6.4.2 nofib-log-6.6 | less
-```
-
-to generate a comparison of the runs in captured in `nofib-log-6.4.2`
-and `nofib-log-6.6`. When making comparisons, be careful to ensure
-that the things that changed between the builds are only the things
-that you _wanted_ to change. There are lots of variables: machine,
-GHC version, GCC version, C libraries, static vs. dynamic GMP library,
-build options, run options, and probably lots more. To be on the safe
-side, make both runs on the same unloaded machine.
-
-## Modes
-
-Each benchmark is runnable in three different time `mode`s:
-
-- `fast`: 0.1-0.2s
-- `norm`: 1-2s
-- `slow`: 5-10s
-
-You can control which mode to run by setting an additional `mode` variable for
-`make`. The default is `mode=norm`. Example for `mode=fast`:
-
-```
-$ make clean
-$ make boot mode=fast
-$ make mode=fast
-```
-
-Note that the `mode`s set in `make boot` and `make` need to agree. Otherwise you
-will get output errors, because `make boot` will generate input files for a
-different `mode`. A more DRY way to control the `mode` would be
-
-```
-$ make clean
-$ export mode=fast
-$ make boot
-$ make
-```
-
-As CPU architectures advance, the above running times may drift and
-occasionally, all benchmarks will need adjustments.
-
-Be aware that `nofib-analyse` will ignore the result if it falls below 0.2s.
-This is the default of its `-i` option, which is of course incompatible with
-`mode=fast`. In that case, you should just set `-i` as appropriate, even
-deactivate it with `-i 0`.
-
-## Boot vs. benchmarked GHC
-
-The `nofib-analyse` utility is compiled with `BOOT_HC` compiler,
-which may be different then the GHC under the benchmark.
-
-You can control which GHC you benchmark with `HC` variable
-
-```
-$ make clean
-$ make boot HC=ghc-head
-$ make HC=ghc-head 2>&1 | tee nofib-log-ghc-head
-```
-
-## Configuration
-
-There are some options you might want to tweak; search for nofib in
-`../mk/config.mk`, and override settings in `../mk/build.mk` as usual.
-
-## Extra Metrics: Valgrind
-
-To get instruction counts, memory reads/writes, and "cache misses",
-you'll need to get hold of Cachegrind, which is part of
-[Valgrind](http://valgrind.org).
-
-You can then pass `-cachegrind` as `EXTRA_RUNTEST_OPTS`. Counting
-instructions slows down execution by a factor of ~30. But it's
-a deterministic metric, so you can combine it with `NoFibRuns=1`:
-
-```
-$ (make EXTRA_RUNTEST_OPTS="-cachegrind" NoFibRuns=1) 2>&1 | tee nofib-log
-```
-
-Optionally combine this with `mode=fast`, see [Modes](#modes).
-
-## Extra Packages
-
-Some benchmarks aren't run by default and require extra packages are
-installed for the GHC compiler being tested. These packages include:
-
- * `old-time`: for `gc` benchmarks
- * `stm`: for smp benchmarks
- * `parallel`: for parallel benchmarks
- * `random`: for various benchmarks
-
-These can be installed with
-
-```
-cabal v1-install --allow-newer -w $HC random parallel old-time
-````
 
 ## Adding benchmarks
 
@@ -234,20 +86,3 @@ particular compiler runs. Recent GHC versions provide the `-fproc-alignment`
 flag to pad procedures, ensuring slightly better stability across runs. If you
 are seeing an unexpected change in performance try adding `-fproc-alignment=64`
 the compiler flags of both your baseline and test tree.
-
-## easy.sh
-
-```
-./easy.sh - easy nofib
-
-Usage: ./easy.sh [ -m mode ] /path/to/baseline/ghc /path/to/new/ghc"
-
-GHC paths can point to the root of the GHC repository,
-if it's build with Hadrian.
-
-Available options:
-  -m MODE  nofib mode: fast norm slow
-
-This script caches the results using the sha256 of ghc executable.
-Remove these files, if you want to rerun the benchmark.
-```
