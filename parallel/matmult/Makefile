@@ -9,7 +9,7 @@ include $(TOP)/mk/boilerplate.mk
 FAST_OPTS = 100 1 10
 NORM_OPTS = 600 1 10
 SLOW_OPTS = 1000 1 10
-SRC_HC_OPTS += -package parallel
+SRC_DEPS = parallel
 
 # FAST_OPTS = 
 # NORM_OPTS = 

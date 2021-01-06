@@ -38,7 +38,7 @@ len :: Vector -> FType
 len (x,y,z) = ans
   where
     ans | sqs /= 0.0 = sqrt sqs
-	| True       = 1
+        | True       = 1
     sqs :: FType
     sqs = (x2 + y2 + z2)
     x2  = x * x

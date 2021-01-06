@@ -59,7 +59,7 @@ endif
 # All the standard gluing together, as in the comment right at the front
 
 
-HC_OPTS            = $(BOOTSTRAPPING_PACKAGE_CONF_HC_OPTS) $(SRC_HC_OPTS) $(WAY$(_way)_HC_OPTS) $($*_HC_OPTS) $(EXTRA_HC_OPTS)
+HC_OPTS            = $(BOOTSTRAPPING_PACKAGE_CONF_HC_OPTS) $(SRC_HC_OPTS) $(WAY$(_way)_HC_OPTS) $($*_HC_OPTS) $(EXTRA_HC_OPTS) $(addprefix -package, $(SRC_DEPS))
 ifeq "$(HC_VERSION_GE_6_13)" "YES"
 HC_OPTS           += -rtsopts
 endif

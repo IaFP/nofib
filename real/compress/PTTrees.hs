@@ -10,8 +10,8 @@ data PrefixElem a b = PTE a b (PrefixTree a b)
 {-partain-}
 
 insert k v PTNil =
-	PT (PTE k v PTNil) PTNil PTNil
+        PT (PTE k v PTNil) PTNil PTNil
 insert k v (PT p@(PTE k' v' t) l r)
-	| k < k'  = PT p (insert k v l) r
+        | k < k'  = PT p (insert k v l) r
         | k > k'  = PT p l (insert k v r)
         | otherwise = PT p l r

@@ -82,7 +82,7 @@ transcl_nested :: (Eq a) => (a -> [a]) -> [a] -> [[a]]  {- [a] -}
 transcl_nested r xs = {- (nub . concat) -}  zss
                     where -- zss :: [[a]]
                           zss = xs:(build 1 zss)
-	                  -- build :: Int -> [[a]] -> [[a]]
+                          -- build :: Int -> [[a]] -> [[a]]
                           build j []       = []
                           build j (xs:xss) = zss' ++ build (j+length zss') xss
                                              where zss' = [ filter (not . (`elem` (concat (take j zss)))) xs' | x <- xs, let xs' = r x ]
@@ -122,7 +122,7 @@ transcl_set r xs = foldl Data.Set.union Data.Set.empty xs'
                                        is_new ([]) y                              = True
                                        is_new (xs:xss) y | y `Data.Set.member` xs = False
                                                          | otherwise              = is_new xss y
-                                       	
+                                               
 
 -- transcl_set (r1_set 444) (Data.Set.fromList [1])
 -- (0.07 secs, 3884380 bytes)

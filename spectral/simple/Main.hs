@@ -65,24 +65,24 @@ reportSimple iterations =
 -- Was:
 --  putStrLn
 --    (mix "\n" (let {(u,v,r,z,alpha,s,rho,p,q,epsilon,theta,deltat,err) = simple_total iterations}
---			in [show "RESULT u,v,r,z,alpha,s,rho,p,q,epsilon,theta,deltat err",
---			    show "<" ++ show u ++ "," ++ show v ++ "," ++ show r ++ "," ++ show z ++ ","
---			    ++ show alpha ++ "," ++ show s ++ "," ++ show rho ++ "," ++ show p ++ ","
---			    ++ show q ++ ","++ show epsilon ++ ","++ show theta ++ ","
---			    ++ show deltat ++ ","++ show err ++ ">" ])
---		     ++ "\n" ++ "done")
+--            in [show "RESULT u,v,r,z,alpha,s,rho,p,q,epsilon,theta,deltat err",
+--                show "<" ++ show u ++ "," ++ show v ++ "," ++ show r ++ "," ++ show z ++ ","
+--                ++ show alpha ++ "," ++ show s ++ "," ++ show rho ++ "," ++ show p ++ ","
+--                ++ show q ++ ","++ show epsilon ++ ","++ show theta ++ ","
+--                ++ show deltat ++ ","++ show err ++ ">" ])
+--             ++ "\n" ++ "done")
 
 
 reportSimple2 :: Int -> IO ()
 reportSimple2 iterations =
   putStrLn
     (mix "\n" (let {((mat0,mat1),(mat2,mat3),mat4,mat5,mat6,mat7,mat8,mat9,mat10,a,b) = simple iterations}
-			in [show "RESULT ",show "U",show mat0,show "V",show mat1,show "R",
-			    show mat2,show "Z", show mat3,show "Alpha", show mat4,show "S",
-			    show mat5,show "Rho", show mat6,show "P",
-			    show mat7,show "Q", show mat8,show "epsilon", show mat9,"theta",
-			    show mat10,show a, show b])
-		     ++ "\n" ++ "done")
+            in [show "RESULT ",show "U",show mat0,show "V",show mat1,show "R",
+                show mat2,show "Z", show mat3,show "Alpha", show mat4,show "S",
+                show mat5,show "Rho", show mat6,show "P",
+                show mat7,show "Q", show mat8,show "epsilon", show mat9,"theta",
+                show mat10,show a, show b])
+             ++ "\n" ++ "done")
 
 
 
@@ -108,15 +108,15 @@ arrays_2 b ivs = ((array b (array_unzip ivs fst)),
 
 arrays_3 :: (Ix a) => (a, a) -> [Assoc a (b, c, d)] -> (Array a b, Array a c, Array a d)
 arrays_3 b ivs = let {first (x,y,z) = x;
-		      second (x,y,z) = y;
-		      third  (x,y,z) = z}
-  		   in (array b (array_unzip ivs first),
-	               array b (array_unzip ivs second),
+              second (x,y,z) = y;
+              third  (x,y,z) = z}
+             in (array b (array_unzip ivs first),
+                   array b (array_unzip ivs second),
                        array b (array_unzip ivs third))
 
 -- Strict Arrays, force evaluation of the elements.
 strictArray resultArray = seq (map evalValue (elems resultArray)) resultArray
-	where evalValue v = seq v v
+    where evalValue v = seq v v
 
 strictArrays_2 (a1, a2) = (strictArray a1, strictArray a2)
 strictArrays_3 (a1, a2, a3) = (strictArray a1, strictArray a2, strictArray a3)
@@ -143,20 +143,20 @@ pHbounds ((x_low,x_high),(y_low,y_high)) = ((x_low,y_low),(x_high,y_high))
 
 simple :: Int -> State
 simple step_count = let {
- 			 (totals,state) = simple_loop (compute_initial_state ()) step_count
-			} in state
+              (totals,state) = simple_loop (compute_initial_state ()) step_count
+            } in state
 
 simple_total :: Int -> Totals
 simple_total step_count =
-			let {
-			     (totals,state) = simple_loop (compute_initial_state ()) step_count
-			    } in totals
+            let {
+                 (totals,state) = simple_loop (compute_initial_state ()) step_count
+                } in totals
 
 simple_loop ::  (Totals,State) -> Int -> (Totals,State)
 simple_loop result@(totals,state) step =
-				if step < 1 then result else
-	                           seq (total_total totals) (simple_loop (compute_next_state state))
-	                              (step - (1::Int))
+                if step < 1 then result else
+                               seq (total_total totals) (simple_loop (compute_next_state state))
+                                  (step - (1::Int))
 
 total_total (v1, v2, x1, x2, alpha, s, rho,
                 p, q, epsilon, theta, deltat, c) =
@@ -573,7 +573,7 @@ make_ab theta sigma gamma preceding =
               nume2 = (gamma!preceding zone)
                       * (b!preceding zone) + (sigma!zone)
                       * (theta!zone);
-	      result1 = nume1 / denom;
+          result1 = nume1 / denom;
               result2 = nume2 / denom
               } in seq (result1 + result2) (result1,result2) ;
        (a, b) = (arrays_2 (pHbounds dimension_all_zones)

@@ -1,3 +1,6 @@
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE MagicHash #-}
+
 #include "unboxery.h"
 
 #ifdef USE_GLASGOW_HACKS
@@ -23,24 +26,24 @@ import RU
 
 atan2Float# :: Float# -> Float# -> Float#
 atan2Float# y x  =
-	if x `geFloat#` 0.0# then
-		if y `eqFloat#` 0.0# then
-			0.0#
-		else
-			atanFloat# (y `divideFloat#` x)
-	else if x `ltFloat#` 0.0# then
-		if y `eqFloat#` 0.0# then
-			pi#
-		else
-			atanFloat# (y `divideFloat#` x) `plusFloat#` pi#
-	else if y `gtFloat#` 0.0# then
-		pi# `divideFloat#` 2.0#
+        if x `geFloat#` 0.0# then
+                if y `eqFloat#` 0.0# then
+                        0.0#
+                else
+                        atanFloat# (y `divideFloat#` x)
+        else if x `ltFloat#` 0.0# then
+                if y `eqFloat#` 0.0# then
+                        pi#
+                else
+                        atanFloat# (y `divideFloat#` x) `plusFloat#` pi#
+        else if y `gtFloat#` 0.0# then
+                pi# `divideFloat#` 2.0#
 
-	else
-		negpi# `divideFloat#` 2.0#
+        else
+                negpi# `divideFloat#` 2.0#
 
-	where pi# =     3.1415926536#
-	      negpi# = -3.1415926536#
+        where pi# =     3.1415926536#
+              negpi# = -3.1415926536#
 #endif
 
 --  File: "nucleic2.m"
@@ -550,7 +553,7 @@ search partial_inst [] constraint = [partial_inst]
 search partial_inst (h:t) constraint = try_assignments (h partial_inst)
     where try_assignments [] = []
           try_assignments (v:vs) | constraint v partial_inst = (search (v:partial_inst) t constraint) ++ (try_assignments vs)
-				 | otherwise                 = try_assignments vs
+                                 | otherwise                 = try_assignments vs
 
 -- -- DOMAINS -----------------------------------------------------------------
 
@@ -599,18 +602,18 @@ dgf_base tfo v@(Var i t n) nuc
                 (tfo_combine tfo (tfo_inv_ortho x))
     where
        x | is_A n
-	 = tfo_align (atom_pos nuc_C1XXX v)
+         = tfo_align (atom_pos nuc_C1XXX v)
                      (atom_pos rA_N9   v)
                      (atom_pos nuc_C4  v)
-	 | is_C n
+         | is_C n
          = tfo_align (atom_pos nuc_C1XXX v)
                      (atom_pos nuc_N1  v)
                      (atom_pos nuc_C2  v)
-	 | is_G n
+         | is_G n
          = tfo_align (atom_pos nuc_C1XXX v)
                      (atom_pos rG_N9   v)
                      (atom_pos nuc_C4  v)
-	 | otherwise
+         | otherwise
          = tfo_align (atom_pos nuc_C1XXX v)
                      (atom_pos nuc_N1  v)
                      (atom_pos nuc_C2  v)
@@ -850,8 +853,8 @@ var_most_distant_atom v@(Var i t n)
 #ifdef USE_UNBOXED_FLOATS
     -- partain: can't do lazy pattern-match if x y z are unboxed...
     where distance p = case (absolute_pos v p) of { Pt x y z ->
-		       _SQRT_ ((x _MUL_ x) _ADD_ (y _MUL_ y) _ADD_ (z _MUL_ z))
-		       }
+                       _SQRT_ ((x _MUL_ x) _ADD_ (y _MUL_ y) _ADD_ (z _MUL_ z))
+                       }
 #else
     -- original (partain)
     where distance p = BOX_FLOAT(_SQRT_ ((x _MUL_ x) _ADD_ (y _MUL_ y) _ADD_ (z _MUL_ z)))
@@ -871,10 +874,10 @@ most_distant_atom sols = maximum (map sol_most_distant_atom sols)
 #ifdef USE_GLASGOW_HACKS
 maximum_map :: (a->Float#) -> [a]->Float#
 maximum_map f (h:t) =
-	max f t (f h)
-	where max f (x:xs) m = max f xs (let fx = f x in if fx `gtFloat#` m then fx else m)
-	      max f [] m = m
-	      max :: (a->Float#) -> [a] -> Float# -> Float#
+        max f t (f h)
+        where max f (x:xs) m = max f xs (let fx = f x in if fx `gtFloat#` m then fx else m)
+              max f [] m = m
+              max :: (a->Float#) -> [a] -> Float# -> Float#
 #endif
 
 check = length (pseudoknot "")
@@ -886,13 +889,13 @@ check = length (pseudoknot "")
 
 #ifdef USE_GLASGOW_HACKS
 mainPrimIO =
-	let most_distant = most_distant_atom pseudoknot in
-	_ccall_ printf ``"%f\n"'' (F# most_distant) `seqPrimIO`
-	returnPrimIO ()
+        let most_distant = most_distant_atom pseudoknot in
+        _ccall_ printf ``"%f\n"'' (F# most_distant) `seqPrimIO`
+        returnPrimIO ()
 #else
 main = do
-	[n] <- getArgs
-	replicateM_ (read n) $ do
-		[n] <- getArgs
-		most_distant_atom (pseudoknot n) `seq` return ()
+        [n] <- getArgs
+        replicateM_ (read n) $ do
+                [n] <- getArgs
+                most_distant_atom (pseudoknot n) `seq` return ()
 #endif

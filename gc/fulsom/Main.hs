@@ -37,9 +37,9 @@ import System.IO
 main = do
     argv <- getArgs
     let
-	n = case argv of
-	      [a] -> read a
-	      _   -> 7
+        n = case argv of
+              [a] -> read a
+              _   -> 7
     hSetBinaryMode stdin True
     hSetBinaryMode stdout True
     putStr (picture n)

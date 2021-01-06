@@ -1,7 +1,7 @@
 TOP = ../../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -cpp -fglasgow-exts -H80M
+SRC_HC_OPTS += -H80M
 
 include $(TOP)/mk/target.mk
 

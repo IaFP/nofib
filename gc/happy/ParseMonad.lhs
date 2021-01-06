@@ -30,4 +30,6 @@ The parser monad.
 >	m >>= k =  P $ \s l -> case runP m s l of
 >		OkP a -> runP (k a) s l
 >		FailP s -> FailP s
+
+> instance MonadFail P where
 >	fail s = P $ \ _ _ -> FailP s

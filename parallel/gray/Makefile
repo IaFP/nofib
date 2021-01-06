@@ -13,6 +13,7 @@
 TOP = ../..
 include $(TOP)/mk/boilerplate.mk
 
-SRC_HC_OPTS += -package parallel -package parsec -fvia-C -fexcess-precision
+SRC_HC_OPTS = -fexcess-precision
+SRC_DEPS = parallel parsec
 
 include $(TOP)/mk/target.mk

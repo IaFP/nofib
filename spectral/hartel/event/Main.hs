@@ -1,3 +1,6 @@
+{-# LANGUAGE CPP #-}
+{-# LANGUAGE MagicHash #-}
+
 module Main (main) -- event
 where {
     import System.Environment (getArgs);

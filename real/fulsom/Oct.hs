@@ -46,7 +46,7 @@ makeoct csg = octer 1 csg xyz
 -- octer :: Int -> Csg -> (R3 BI) -> Oct
 octer nn csg xyz
     = case (calc csg white xyz) of
-	(res,newc',rgb,new) ->
+        (res,newc',rgb,new) ->
          let
           newc = if new then newc' else csg
           c = light rgb (calcn newc xyz)
@@ -54,35 +54,35 @@ octer nn csg xyz
           bhx = bothalf x ; thx = tophalf x
           bhy = bothalf y ; thy = tophalf y
           tbz = topbit  z ; bhz = bothalf z
-	  os  = if nn == 1 then osb else osa
-	  n1  = nn + 1
+          os  = if nn == 1 then osb else osa
+          n1  = nn + 1
           osa = map (octer n1 newc)
                [ (bhx,bhy,tbz) , (bhx,bhy,bhz) ,
-		 (thx,bhy,tbz) , (thx,bhy,bhz) ,
-		 (bhx,thy,tbz) , (bhx,thy,bhz) ,
-		 (thx,thy,tbz) , (thx,thy,bhz) ]
+                 (thx,bhy,tbz) , (thx,bhy,bhz) ,
+                 (bhx,thy,tbz) , (bhx,thy,bhz) ,
+                 (thx,thy,tbz) , (thx,thy,bhz) ]
           osb = [(octer n1 newc (bhx,bhy,tbz)) ,
-		 (octer n1 newc (bhx,bhy,bhz)) ,
-		 (octer n1 newc (thx,bhy,tbz)) ,
-		 (octer n1 newc (thx,bhy,bhz)) ,
-		 (octer n1 newc (bhx,thy,tbz)) ,
-		 (octer n1 newc (bhx,thy,bhz)) ,
-		 (octer n1 newc (thx,thy,tbz)) ,
-		 (octer n1 newc (thx,thy,bhz)) ]
+                 (octer n1 newc (bhx,bhy,bhz)) ,
+                 (octer n1 newc (thx,bhy,tbz)) ,
+                 (octer n1 newc (thx,bhy,bhz)) ,
+                 (octer n1 newc (bhx,thy,tbz)) ,
+                 (octer n1 newc (bhx,thy,bhz)) ,
+                 (octer n1 newc (thx,thy,tbz)) ,
+                 (octer n1 newc (thx,thy,bhz)) ]
          in
-	     if res < (pt 0) then
-	      O_Full c
-	     else if res > (pt 0) then
-	      O_Empty
-	     else
-	      O_Sub c os
+             if res < (pt 0) then
+              O_Full c
+             else if res > (pt 0) then
+              O_Empty
+             else
+              O_Sub c os
 
 {-
           os = map (octer newc)
                [ (bhx,bhy,tbz) , (bhx,bhy,bhz) ,
-		 (thx,bhy,tbz) , (thx,bhy,bhz) ,
-		 (bhx,thy,tbz) , (bhx,thy,bhz) ,
-		 (thx,thy,tbz) , (thx,thy,bhz) ]
+                 (thx,bhy,tbz) , (thx,bhy,bhz) ,
+                 (bhx,thy,tbz) , (bhx,thy,bhz) ,
+                 (thx,thy,tbz) , (thx,thy,bhz) ]
 -}
 
 calcn csg xyz = normalise (makevector f0 f1 f2 f3)

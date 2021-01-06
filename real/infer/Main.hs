@@ -6,8 +6,8 @@ import Term
 import Type
 import Environment
 import InferMonad
-import Substitution	( Sub )
-import MaybeM		( Maybe )
+import Substitution        ( Sub )
+import MaybeM                ( Maybe )
 import Infer
 
 import Control.Monad

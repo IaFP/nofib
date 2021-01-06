@@ -195,19 +195,19 @@ calc (Geom a (RotZ rad)) rgb xyz
 -- conflate matrices together and into planes planes...
 reduceM (Object X)               mata
       =  case (mat1x4 (1,0,0,0) mata) of
-	  (x,y,z,w) -> (Object (Plane x y z w),True)
+          (x,y,z,w) -> (Object (Plane x y z w),True)
 reduceM (Object Y)               mata
       =  case (mat1x4 (0,1,0,0) mata) of
-	  (x,y,z,w) -> (Object (Plane x y z w),True)
+          (x,y,z,w) -> (Object (Plane x y z w),True)
 reduceM (Object Z)               mata
       =  case (mat1x4 (0,0,1,0) mata) of
-	  (x,y,z,w) -> (Object (Plane x y z w),True)
+          (x,y,z,w) -> (Object (Plane x y z w),True)
 reduceM (Object (Plane a b c d)) mata
       =  case (mat1x4 (a,b,c,d) mata) of
-	  (x,y,z,w) -> (Object (Plane x y z w),True)
+          (x,y,z,w) -> (Object (Plane x y z w),True)
 reduceM (Matrix b matb)          mata
       =  case (mat4x4 mata matb)      of
-	  matc -> (Matrix b matc,True)
+          matc -> (Matrix b matc,True)
 reduceM _                        _    = (no,False)
 
 

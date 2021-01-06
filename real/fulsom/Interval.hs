@@ -18,10 +18,10 @@
  -}
 
 module Interval(Interval, (#), pt, sqr,
-		tophalf, bothalf, topbit,
-		lo, hi, mid1, mid2,
-		up,down,unpt)
-		where
+                tophalf, bothalf, topbit,
+                lo, hi, mid1, mid2,
+                up,down,unpt)
+                where
 
 infix 4 #,:#:
 
@@ -46,36 +46,36 @@ instance (Ord a) => Ord (Interval a) where
 
 
 instance (Num a, Ord a, Eq a, Show a) => Num (Interval a) where
-  (+)		= ivPlus
-  (*)		= ivMult
-  negate	= ivNegate
-  abs		= ivAbs
-  signum	= ivSignum
-  fromInteger	= ivFromInteger
+  (+)                = ivPlus
+  (*)                = ivMult
+  negate        = ivNegate
+  abs                = ivAbs
+  signum        = ivSignum
+  fromInteger        = ivFromInteger
 
 
 instance (Show a, Num a, Ord a, Fractional a) => Fractional (Interval a) where
-  (/)		= ivDiv
-  fromRational	= ivFromRational
+  (/)                = ivDiv
+  fromRational        = ivFromRational
 
 instance (Show a, RealFloat a) => Floating (Interval a) where
-  pi		= Pt pi
-  exp		= ivExp
-  log		= ivLog
-  sqrt		= ivSqrt
-  (**)		= ivPower
-  sin		= ivSin
-  cos		= ivCos
-  tan		= ivTan
-  asin		= ivAsin
-  acos		= ivAcos
-  atan		= ivAtan
-  sinh		= ivSinh
-  cosh		= ivCosh
-  tanh		= ivTanh
-  asinh		= ivAsinh
-  acosh		= ivAcosh
-  atanh		= ivAtanh
+  pi                = Pt pi
+  exp                = ivExp
+  log                = ivLog
+  sqrt                = ivSqrt
+  (**)                = ivPower
+  sin                = ivSin
+  cos                = ivCos
+  tan                = ivTan
+  asin                = ivAsin
+  acos                = ivAcos
+  atan                = ivAtan
+  sinh                = ivSinh
+  cosh                = ivCosh
+  tanh                = ivTanh
+  asinh                = ivAsinh
+  acosh                = ivAcosh
+  atanh                = ivAtanh
 
 
 -- Error functions - un-used.
@@ -139,35 +139,35 @@ ivNegate (a :#: b)           = negate b :#: negate a
 ivMult   (Pt a)    (Pt c)    = Pt (a*c)
 ivMult   (a :#: b) (c :#: d) | (min a c) > 0 = a*c :#: b*d
                              | (max b d) < 0 = b*d :#: a*c
-			     | otherwise      = minmax [e,f,g,h]
-			       where
-				 e = b * c
-				 f = a * d
-				 g = a * c
-				 h = b * d
+                             | otherwise      = minmax [e,f,g,h]
+                               where
+                                 e = b * c
+                                 f = a * d
+                                 g = a * c
+                                 h = b * d
 ivMult   (Pt a)    (c :#: d) | a > 0     = a*c :#: a*d
-			     | a < 0     = a*d :#: a*c
-			     | otherwise = (Pt 0)
+                             | a < 0     = a*d :#: a*c
+                             | otherwise = (Pt 0)
 ivMult   (c :#: d) (Pt a)    | a > 0     = a*c :#: a*d
-			     | a < 0     = a*d :#: a*c
-			     | otherwise = (Pt 0)
+                             | a < 0     = a*d :#: a*c
+                             | otherwise = (Pt 0)
 
 -- minmax finds the lowest, and highest in a list - used for mult.
 -- Should use foldl rather than foldr
 
 minmax [a] = a :#: a
 minmax (a:as)  = case True of
-		  True | (a > s) -> f :#: a
-		  True | (a < f) -> a :#: s
-		  otherwise      -> f :#: s
+                  True | (a > s) -> f :#: a
+                  True | (a < f) -> a :#: s
+                  otherwise      -> f :#: s
                  where
                      (f :#: s) = minmax as
 
 ivAbs (Pt a)    = Pt (abs a)
 ivAbs (a :#: b) | a<=0 && 0<=b   = 0 :#: (max (abs a) (abs b))
-		| a<=b && b<0    = b :#: a
-		| 0<a && a<=b    = a :#: b
-		| otherwise = error "abs doesny work!"
+                | a<=b && b<0    = b :#: a
+                | 0<a && a<=b    = a :#: b
+                | otherwise = error "abs doesny work!"
 
 ivSignum (Pt a)    = Pt (signum a)
 ivSignum (a :#: b) = (signum a) :#: (signum b)
@@ -193,7 +193,7 @@ ivLog (a :#: b) = (log a) :#: (log b)
 ivSqrt (Pt a)    = Pt (sqrt a)
 ivSqrt (a :#: b) = (sqrt a) :#: (sqrt b)
 
-ivPower x y = exp (log x * y)		-- Optimise for x ** 2
+ivPower x y = exp (log x * y)                -- Optimise for x ** 2
 
 
 ivSin :: (Floating a) => (Interval a) -> (Interval a)

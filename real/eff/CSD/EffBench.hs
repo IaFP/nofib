@@ -7,9 +7,6 @@
 
 module EffBench where
 
-import qualified Control.Monad.State.Strict as S
-
-
 times :: Monad m => Int -> m a -> m ()
 times n ma = go n where
   go 0 = pure ()

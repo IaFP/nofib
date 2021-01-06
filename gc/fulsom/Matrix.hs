@@ -33,10 +33,10 @@ dorow :: (Fractional a) => Row -> R3 a -> a
 dorow (m11,m12,m13,m14) (x,y,z)
     = case  (m1 * x) + (m2 * y) + (m3 * z) + m4 of n -> n
        where
-	 m1 = realToFrac m11
-	 m2 = realToFrac m12
-	 m3 = realToFrac m13
-	 m4 = realToFrac m14
+         m1 = realToFrac m11
+         m2 = realToFrac m12
+         m3 = realToFrac m13
+         m4 = realToFrac m14
 
 mat4x1' :: (Fractional a) => Arr -> R3 a -> R3 a
 mat4x1' (r1,r2,r3) xyz = (x,y,z)
@@ -49,9 +49,9 @@ dorow' :: (Fractional a) => Row -> R3 a -> a
 dorow' (m11,m12,m13,m14) (x,y,z)
     = case (m1 * x) + (m2 * y) + (m3 * z) of n -> n
        where
-	 m1 = realToFrac m11
-	 m2 = realToFrac m12
-	 m3 = realToFrac m13
+         m1 = realToFrac m11
+         m2 = realToFrac m12
+         m3 = realToFrac m13
 
 mat1x4 :: Row -> Arr -> Row
 mat1x4 a (b1,b2,b3) = (c1,c2,c3,c4)

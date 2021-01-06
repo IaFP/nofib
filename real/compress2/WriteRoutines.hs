@@ -1,8 +1,10 @@
+{-# LANGUAGE MagicHash #-}
+
 module WriteRoutines (outputCodes)
 where
 
 --import GlaExts
-import GHC.Base	( Int(..), word2Int#, int2Word#, and#, or#, shiftL#, shiftRL# )
+import GHC.Base        ( Int(..), word2Int#, int2Word#, and#, or#, shiftL#, shiftRL# )
 import Encode (CodeEvent(..))
 
 -- Start of code added for ghc

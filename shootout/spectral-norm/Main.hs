@@ -14,6 +14,7 @@
 -- Should be run with:
 -- 	+RTS -N<number of cores>
 {-# LANGUAGE BangPatterns, MagicHash #-}
+{-# OPTIONS_GHC -fexcess-precision #-}
 
 import System.Environment
 import Foreign.Marshal.Array

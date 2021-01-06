@@ -6,7 +6,7 @@ NORM_OPTS = 5000000
 SLOW_OPTS = 100000000
 
 ifeq "$(HEAP)" "LARGE"
-SRC_RUNTEST_OPTS += +RTS -H430m -RTS
+PROG_ARGS += +RTS -H430m -RTS
 endif
 
 include $(TOP)/mk/target.mk
