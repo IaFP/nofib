@@ -41,14 +41,14 @@ clearBuf (Buf _ lB pB) = Buf 0 lB pB
 
 main = allocaArray 82 $ \ line ->
   let go !buf = do
-      !m <- hGetBuf stdin line 82
-      if m == 0 then revcomp buf else do
-        findChar line m (c2w '>')
-          (putBuf line m buf go)
-          (\ end -> do
-            putBuf line end buf revcomp
-            putBuf (line +* end) (m - end) (clearBuf buf)
-              go)
+        !m <- hGetBuf stdin line 82
+        if m == 0 then revcomp buf else do
+          findChar line m (c2w '>')
+            (putBuf line m buf go)
+            (\ end -> do
+              putBuf line end buf revcomp
+              putBuf (line +* end) (m - end) (clearBuf buf)
+                go)
     in withBuf go
 
 (+*) = advancePtr
