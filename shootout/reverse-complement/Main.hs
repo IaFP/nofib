@@ -11,6 +11,8 @@ import Control.Monad
 import Foreign
 import Data.ByteString.Internal
 import System.IO
+import GHC.Exts
+import GHC.IO (IO(..))
 
 data Buf = Buf !Int !Int !(Ptr Word8)
 
@@ -56,6 +58,11 @@ main = allocaArray 82 $ \ line ->
 {-# INLINE comps #-}
 comps = Prelude.zipWith (\ a b -> (fromEnum a, c2w b)) "AaCcGgTtUuMmRrYyKkVvHhDdBb"
   "TTGGCCAAAAKKYYRRMMBBDDHHVV"
+
+-- Just like unsafeDupablePerformIO, but we inline it.
+{-# INLINE inlinePerformIO #-}
+inlinePerformIO :: IO a -> a
+inlinePerformIO (IO m) = case m realWorld# of (# _, r #)   -> r
 
 ca :: Ptr Word8
 ca = inlinePerformIO $ do
