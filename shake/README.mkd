@@ -64,7 +64,8 @@ When running with `--cachegrind` tests can be safely parallelised with the
 ### Performance counters with `perf_events`
 
 The benchmarks can also be run under the Linux `perf` tool for collection of
-(micro-)architectural event counts. This mode is enabled 
+(micro-)architectural event counts. This mode is enabled with the `--perf` flag.
+Arguments to `perf` can be passed via `--perf-arg`.
 
 ## Data format
 
