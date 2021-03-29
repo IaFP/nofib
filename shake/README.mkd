@@ -79,3 +79,6 @@ structure with `/` being the component delimiter.
 ```
 $ cabal new-run nofib-compare -- approach-b.results.csv approach-a.results.csv
 ```
+
+nofib-compare supports several different output formats, selectable with the
+`-f` flag, namely: ascii (default), markdown, csv, latex
