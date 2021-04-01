@@ -1082,7 +1082,7 @@ See notes under "Action Tables" above for some subtleties in this function.
 >			   | otherwise                = max_off
 >	       furthest_right = off + max_token
 >
->  	   -- trace ("fit: state " ++ show state_no ++ ", off " ++ show off ++ ", elems " ++ show state) $ do
+>          -- trace ("fit: state " ++ show state_no ++ ", off " ++ show off ++ ", elems " ++ show state) $ do
 >
 >	   writeArray (which_off act_or_goto) state_no off
 >	   addState off table check state
@@ -1104,14 +1104,14 @@ slot is free or not.
 >   if off == 0 then try_next else do
 >
 >     -- don't use an offset we've used before
->   b <- readArray off_arr off
->   if b /= 0 then try_next else do
+>     b <- readArray off_arr off
+>     if b /= 0 then try_next else do
 >
->     -- check whether the actions for this state fit in the table
->   ok <- fits off state table
->   if not ok then try_next else return off
+>       -- check whether the actions for this state fit in the table
+>       ok <- fits off state table
+>       if not ok then try_next else return off
 >  where
-> 	try_next = findFreeOffset (off+1) table off_arr state
+>       try_next = findFreeOffset (off+1) table off_arr state
 
 
 > fits :: Int -> [(Int,Int)] -> STUArray s Int Int -> ST s Bool
