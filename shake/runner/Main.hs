@@ -551,7 +551,7 @@ runTest nofib@Build{..} runMode resultsTsv = do
                             putStrLn "Start of expected output:"
                             BSL.putStrLn $ BSL.take 800 stdout'
                             putStrLn $ "Full expected/actual output written to " ++ (output </> src_dir)
-                        fail $ "Benchmark failed:" ++ src_dir ++ " unexpected stdout:^"
+                        unless keepGoing $ fail $ "Benchmark failed:" ++ src_dir ++ " unexpected stdout:^"
                   -- No stdout file, ignore stdout
                   _ -> return ()
 

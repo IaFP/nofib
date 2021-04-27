@@ -65,6 +65,7 @@ data Nofib
         ,speed :: Speed
         ,rts_args :: [String]
         ,times :: Int
+        ,keepGoing :: Bool
         }
     deriving (Show)
 
@@ -102,6 +103,7 @@ nofibMode =
     <*> option auto (long "speed" <> short 's' <> value Norm <> help "Test speed (Fast,Norm,Slow)")
     <*> many (option str (long "rts-arg" <> help "Extra arguments to pass to runtime system when running"))
     <*> option auto (long "times" <> short 't' <> value 1 <> help "Number of times to run each test")
+    <*> switch (long "keep-going" <> help "Ignore output missmatches")
 
 
 -- | Create a clean set of arguments, with any defaults filled in
