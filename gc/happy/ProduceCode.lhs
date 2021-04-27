@@ -5,6 +5,7 @@ The code generator.
 -----------------------------------------------------------------------------
 
 > {-# LANGUAGE FlexibleContexts #-}
+> {-# LANGUAGE NondecreasingIndentation #-}
 > module ProduceCode (produceParser) where
 
 > import Paths_happy		( version )
@@ -329,7 +330,7 @@ happyMonadReduce to get polymorphic recursion.  Sigh.
 >				else str "(HappyTerminal "
 >				   . mkHappyTerminalVar n t
 >				   . char ')'
->		
+>
 >		tokLets code
 >		   | coerce && not (null cases)
 >			= interleave "\n\t" cases
@@ -394,7 +395,7 @@ The token conversion function.
 >	     . str " sts stk"
 >	  eofError = str " (error \"reading EOF!\")"
 >	  eofTok = showInt (tokIndex eof)
->	
+>
 >	  doAction = case target of
 >	    TargetArrayBased -> str "happyDoAction i tk action"
 >	    _   -> str "action i i tk (HappyState action)"
@@ -478,7 +479,7 @@ machinery to discard states in the parser...
 
 >    produceActionTable TargetHaskell
 >	= foldr (.) id (map (produceStateFunction goto) (assocs action))
->	
+>
 >    produceActionTable TargetArrayBased
 > 	= produceActionArray
 >	. produceReduceArray
@@ -496,7 +497,7 @@ machinery to discard states in the parser...
 >	. str "\n\n"
 >
 >	where gotos = goto ! state
->	
+>
 >	      produceActions (t, LR'Fail{-'-}) = id
 >	      produceActions (t, action@(LR'Reduce{-'-} _ _))
 >	      	 | action == default_act = id
@@ -505,17 +506,17 @@ machinery to discard states in the parser...
 >	      produceActions (t, action)
 >	      	= actionFunction t
 >		. mkAction action . str "\n"
->		
+>
 >	      produceGotos (t, Goto i)
 >	        = actionFunction t
 >		. str "happyGoto " . mkActionName i . str "\n"
 >	      produceGotos (t, NoGoto) = id
->	
+>
 >	      actionFunction t
 >	      	= mkActionName state . strspace
 >		. ('(' :) . showInt t
 >		. str ") = "
->		
+>
 > 	      default_act = getDefault assocs_acts
 >
 >	      assocs_acts = assocs acts
@@ -528,7 +529,7 @@ action array indexed by (terminal * last_state) + state
 >	    . str "happyActOffsets = HappyA# \"" --"
 >	    . str (hexChars act_offs)
 >	    . str "\"#\n\n" --"
->	
+>
 >	    . str "happyGotoOffsets :: HappyAddr\n"
 >	    . str "happyGotoOffsets = HappyA# \"" --"
 >	    . str (hexChars goto_offs)
@@ -538,12 +539,12 @@ action array indexed by (terminal * last_state) + state
 >	    . str "happyDefActions = HappyA# \"" --"
 >	    . str (hexChars defaults)
 >	    . str "\"#\n\n" --"
->	
+>
 >	    . str "happyCheck :: HappyAddr\n"
 >	    . str "happyCheck = HappyA# \"" --"
 >	    . str (hexChars check)
 >	    . str "\"#\n\n" --"
->	
+>
 >	    . str "happyTable :: HappyAddr\n"
 >	    . str "happyTable = HappyA# \"" --"
 >	    . str (hexChars table)
@@ -555,31 +556,31 @@ action array indexed by (terminal * last_state) + state
 >		. shows (n_states) . str ") (["
 >	    . interleave' "," (map shows act_offs)
 >	    . str "\n\t])\n\n"
->	
+>
 >	    . str "happyGotoOffsets :: Array Int Int\n"
 >	    . str "happyGotoOffsets = listArray (0,"
 >		. shows (n_states) . str ") (["
 >	    . interleave' "," (map shows goto_offs)
 >	    . str "\n\t])\n\n"
->	
+>
 >	    . str "happyDefActions :: Array Int Int\n"
 >	    . str "happyDefActions = listArray (0,"
 >		. shows (n_states) . str ") (["
 >	    . interleave' "," (map shows defaults)
 >	    . str "\n\t])\n\n"
->	
+>
 >	    . str "happyCheck :: Array Int Int\n"
 >	    . str "happyCheck = listArray (0,"
 >		. shows table_size . str ") (["
 >	    . interleave' "," (map shows check)
 >	    . str "\n\t])\n\n"
->	
+>
 >	    . str "happyTable :: Array Int Int\n"
 >	    . str "happyTable = listArray (0,"
 >		. shows table_size . str ") (["
 >	    . interleave' "," (map shows table)
 >	    . str "\n\t])\n\n"
->	
+>
 >    (_, last_state) = bounds action
 >    n_states = last_state + 1
 >    n_terminals = length terms
@@ -748,7 +749,7 @@ compatibility) is not passed the current token.
 >	     TargetHaskell -> str "action_" . shows no
 >	     TargetArrayBased
 >		 | ghc       -> shows no . str "#"
->		 | otherwise -> shows no			
+>		 | otherwise -> shows no
 >	. maybe_tks
 >	. str ") "
 >	. brack' (if coerce
@@ -937,7 +938,7 @@ See notes under "Action Tables" above for some subtleties in this function.
 >
 >	 (table,check,act_offs,goto_offs,max_off)
 >		 = runST (genTables (length actions) max_token sorted_actions)
->	
+>
 >	 -- the maximum token number used in the parser
 >	 max_token = max n_terminals (n_starts+n_nonterminals) - 1
 >
