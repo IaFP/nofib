@@ -7,9 +7,18 @@ import Data.Maybe
 
 import Prelude hiding (lines)
 
+import RunnerTypes
 -------------------------------------------------------------------------------
 -- Finding source files for a given .o file
 -------------------------------------------------------------------------------
+
+runWithVerbosity :: Monad m => Nofib -> Int -> m () -> m ()
+runWithVerbosity Build { verbosity = conf_verbosity} v log_action = do
+    when (conf_verbosity > v) log_action
+
+runVerbose :: Monad m => Nofib -> m () -> m ()
+runVerbose n act = runWithVerbosity n 2 act
+
 
 -- | dropPathPrefix "foo" "foo/bar" == "bar"
 dropPathPrefix :: [Char] -> [Char] -> FilePath

@@ -256,9 +256,10 @@ buildRules nofib@Build{..} = do
     "_make//config.txt" %> \out -> do
         let test = unoutput out
         let src_dir = testDir test
-        printM $ "config:out:" ++ out
-        printM $ "config:test:" ++ show test
-        printM $ "config:src_dir:" ++ src_dir
+        runVerbose nofib $ do
+            printM $ "config:out:" ++ out
+            printM $ "config:test:" ++ show test
+            printM $ "config:src_dir:" ++ src_dir
         src <- lines . fuseLines <$> readFile' (src_dir </> "Makefile")
         writeFileLines out $ convertConfig src
 
@@ -280,14 +281,15 @@ buildRules nofib@Build{..} = do
                 -- Not recursive, the make system ignores files in subfolders.
                 c_srcs <- getDirectoryFiles "" [src_dir ++ "/*.c"]
                 need c_srcs
-                printM $ "c_srcs" ++ show c_srcs
+                runVerbose nofib $ printM $ "c_srcs" ++ show c_srcs
                 let c_objects = map (\c_file -> replaceExtension (output </> c_file) "o") c_srcs
                 return $ nub $ hs_objects ++ c_objects
               else do
                 map (obj_dir </>) <$> mapM oFromSrc config_srcs
 
-        liftIO $ print "OBJS"
-        liftIO $ mapM_ putStrLn objs
+        liftIO $ runVerbose nofib $ do
+            print "OBJS"
+            mapM_ putStrLn objs
 
         need $ nub objs
 
@@ -327,20 +329,24 @@ buildRules nofib@Build{..} = do
             src_dir = testDir test          -- eg. spectral/simple
             obj_dir = output </> src_dir    -- eg. _make/foo/spectral/simple
             o_name = drop (length obj_dir + 1) o -- eg. Main.o
-        printM "readConfig"
 
-        printM $ "o:" ++ o
-        printM $ "test:" ++ show test
-        printM $ "obj_dir:" ++ obj_dir
-        printM $ "src_dir:" ++ src_dir
-        printM $ "o_name:" ++ o_name
+        runVerbose nofib $ do
+            printM "readConfig"
+
+            printM $ "o:" ++ o
+            printM $ "test:" ++ show test
+            printM $ "obj_dir:" ++ obj_dir
+            printM $ "src_dir:" ++ src_dir
+            printM $ "o_name:" ++ o_name
 
         -- Deps are needed for build dependencies/src files
         -- But we only care about lines starting with the current .o file
         deps <- filter (\x -> head (words x) `equalFilePath` o) <$>
                     readFileLines (obj_dir </> ".depends")
-        printM $ "deps:"
-        printM $ deps
+
+        runVerbose nofib $ do
+            printM $ "deps:"
+            printM $ deps
 
         -- Figure out source location
         -- Haskell sources are recorded in .depends so look there first.
@@ -358,14 +364,15 @@ buildRules nofib@Build{..} = do
         -- file in the future for example.
         need [src]
 
-        printM $ "src1:" ++ src
+        runVerbose nofib $ do
+            printM $ "src1:" ++ src
 
-        printM $ "mod_name:" ++ o_name
-        printM $ "src:" ++ src
+            printM $ "mod_name:" ++ o_name
+            printM $ "src:" ++ src
 
         -- foo.o : foo.hs => foo.hs
         let needs = [ drop 2 . dropWhile (/= ':') $ x | x <- deps]
-        liftIO $ do
+        runVerbose nofib $ liftIO $ do
             print "needs"
             mapM_ print needs
         need needs
@@ -620,7 +627,7 @@ getModeArgs benchSettings speed = words $
 
 -- | Get stdin, arguments, expected stdout for benchmarks
 getTestCmdline :: Nofib -> TestName -> Action (BSL.ByteString, [String], Maybe (BSL.ByteString), Maybe (BSL.ByteString))
-getTestCmdline Build{..} test = do
+getTestCmdline nofib@Build{..} test = do
     config <- readConfig' $ output </> src_dir </> "config.txt"
 
     -- Mode/Speed args default to normal mode.
@@ -636,7 +643,7 @@ getTestCmdline Build{..} test = do
       in if s == ""
             then liftIO $ grab "stdin"
             else pure $ Just $ testDir test </> s
-    liftIO $ putStrLn $ "test " <> unTestName test <> " stdin: " <> show stdin_path
+    liftIO $ runVerbose nofib $ putStrLn $ "test " <> unTestName test <> " stdin: " <> show stdin_path
     stdin <- liftIO $ maybe (pure BSL.empty) BSL.readFile stdin_path
 
     -- Check if there is an stdout file. Default to Nothing
@@ -645,7 +652,7 @@ getTestCmdline Build{..} test = do
       in if null s
             then liftIO $ grab "stdout"
             else pure $ Just $ testDir test </> s :: Action (Maybe FilePath)
-    liftIO $ putStrLn $ "test " <> unTestName test <> " stdout: " <> show stdout_path
+    liftIO $ runVerbose nofib $ putStrLn $ "test " <> unTestName test <> " stdout: " <> show stdout_path
     stdout <- liftIO $ sequence (BSL.readFile <$> stdout_path)
 
     -- Check if there is an stdout file. Default to Nothing
@@ -654,7 +661,7 @@ getTestCmdline Build{..} test = do
       in if null s
             then liftIO $ grab "stderr"
             else pure $ Just $ testDir test </> s :: Action (Maybe FilePath)
-    liftIO $ putStrLn $ "test " <> unTestName test <> " stderr: " <> show stderr_path
+    liftIO $ runVerbose nofib $ putStrLn $ "test " <> unTestName test <> " stderr: " <> show stderr_path
     stderr <- liftIO $ sequence (BSL.readFile <$> stderr_path)
 
     return (stdin, args, stdout, stderr)
