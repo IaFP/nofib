@@ -4,6 +4,7 @@ module Board where
 import Wins
 
 import Data.List
+import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, all, elem)
 import Control.Parallel
 import Control.Parallel.Strategies
 

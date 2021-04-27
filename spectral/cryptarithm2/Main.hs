@@ -18,6 +18,7 @@ import Control.Monad
 import Control.Monad.Trans.State
 import Control.Monad.Trans.Class
 import Data.List
+import Prelude hiding (length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, elem)
 import Data.Maybe
 import System.Environment
 

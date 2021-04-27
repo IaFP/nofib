@@ -30,6 +30,8 @@
 ------------------------------------------------------------------------------
 import Data.Char
 import Data.List
+import Prelude hiding (null, length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, elem)
+
 -- main: added by partain
 main = do
   stuff <- getContents

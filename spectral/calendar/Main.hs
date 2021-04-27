@@ -6,6 +6,7 @@
 
 import System.IO
 import Data.List
+import Prelude hiding (null, length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, elem)
 import Data.Char
 
 import System.Environment

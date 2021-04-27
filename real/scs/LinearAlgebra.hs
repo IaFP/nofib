@@ -2,13 +2,14 @@ module LinearAlgebra where
 
 import Data.Array
 import Data.List
+import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, elem)
 
 import Types
-	
+
 apply :: Num a => Matrix a -> Vector a -> Vector a
 apply m v		| cm == cv	= accumArray (+) 0 (1, rm) [(r, v ! c * m ! (r, c)) | (r, c) <- indices m]
 			| otherwise	= error "apply: matrix and vector dimensions are not compatible"
-  where	
+  where
  	((1, 1), (rm, cm))		= bounds m
 	(    1 ,      cv )		= bounds v
 
@@ -89,10 +90,10 @@ gauss_jordan m		| m_is_square m	= (foldr1 (.) [step c | c <- reverse [1 .. size]
 		swap_norm		= (multiply c (1 / v)) . (if r /= c then swap r c else id)
 	  	sweep			= eliminate c m1
 	  	(r, v)			= pivot c rs m0
-	
+
 	pivot c rs m0			= foldl1 max' [(r, m0 ! (r, c)) | r <- rs]
 	max' (r1, v1) (r2, v2)		= if (abs(v1) >= abs(v2)) then (r1, v1) else (r2, v2)
-	
+
 	swap      r s  m		= m // concat ([[((r, c), m ! (s, c)),      ((s, c), m ! (r, c))] | c <- [1 .. size]])
 	multiply  r f  m		= m //         [ ((r, c),              f           * m ! (r, c))  | c <- [1 .. size]]
 	eliminate w m1 m		= m //         [ ((r, c), m ! (r, c) - m1 ! (r, w) * m ! (w, c))  | r <- [1 .. size], r /= w, c <- [1 .. size]]

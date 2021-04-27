@@ -32,6 +32,7 @@
 module Main ( main ) where
 import Control.Monad
 import Data.Char
+import Prelude hiding (null, length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, any, and, elem, notElem)
 import Data.List
 import System.IO
 import System.Environment

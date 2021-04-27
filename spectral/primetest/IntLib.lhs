@@ -15,6 +15,7 @@ In this module we define some useful functions on Integers.
 > module IntLib (readInteger, showInteger, makeNumber, chop,
 >                powerMod, cubeRoot, log2) where
 > import Data.List--1.3
+> import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, all, elem)
 > rcsid = "$Header: /srv/cvs/cvs.haskell.org/fptools/nofib/spectral/primetest/IntLib.lhs,v 1.2 1996/07/25 21:32:53 partain Exp $"
 
 \subsection{Reading and Writing}

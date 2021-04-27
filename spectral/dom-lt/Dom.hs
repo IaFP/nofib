@@ -40,6 +40,7 @@ import Data.Tuple (swap)
 
 import Data.Tree
 import Data.List
+import Prelude hiding (length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, elem)
 import Data.IntMap(IntMap)
 import Data.IntSet(IntSet)
 import qualified Data.IntMap.Strict as IM

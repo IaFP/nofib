@@ -36,6 +36,7 @@ import Norm
 
 import Data.Array
 import Data.Ix
+import Prelude hiding (null, length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, any, and, elem, notElem)
 import Data.List
 
 infixl 9 !^

@@ -13,6 +13,9 @@ dist-newstyle/
 _make
 tags
 
+# Common for hackaged head workarounds
+cabal.project.local
+
 # Specific generated files
 nofib-analyse/nofib-analyse
 runstdtest/runstdtest

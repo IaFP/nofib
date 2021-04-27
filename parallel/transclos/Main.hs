@@ -12,6 +12,7 @@ module Main where
 
 import System.Environment(getArgs)
 import Data.List
+import Prelude hiding (null, length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, elem)
 #if defined(STRATEGIES)
 import Control.Parallel
 import Control.DeepSeq

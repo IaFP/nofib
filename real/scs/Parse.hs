@@ -7,6 +7,7 @@ import Data.Ratio
 
 import Types
 import ParseLib
+import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, elem)
 
 parse_circuit = parse (remove_right circuit whitespace)
 parse_exact   = parse (remove_right exact   whitespace)
@@ -35,7 +36,7 @@ element	= choice [conductor, resistor, capacitor, inductor, vsource, isource, ju
 	junction		= code 'j' (transform Junction  (sequence3 exact exact exact))
 
 	code c			= transform (\(n, e) -> (e, n)) . (sequence2 (remove_left (character c) (sequence3 name name name)))
-	
+
 list	:: Parser List
 list	= repetition1 (enclose (character '(') (glue approx (character ',') approx) (character ')'))
 
@@ -48,10 +49,10 @@ exact	= transform (\((sign, int), (frac, fact)) -> sign * (int + frac) * fact) (
   	sign			= transform make_sign (option (character '-'))
 	make_sign ""		=  1 % 1
 	make_sign "-"		= -1 % 1
-	
+
 	integer			= transform make_integer (parse_while isDigit)
 	make_integer s		= read s % 1
-	
+
 	fraction		= transform make_fraction (option (remove_left (character' '.') (parse_while isDigit)))
 	make_fraction [ ]	= 0 % 1
 	make_fraction [s]	= read s % read ('1' : map (const '0') s)

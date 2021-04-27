@@ -21,6 +21,7 @@ import Data.Word
 import Data.Bits
 import Data.Char
 import Data.List
+import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, all, elem)
 import Data.Maybe
 import Data.IORef
 import GHC.Exts

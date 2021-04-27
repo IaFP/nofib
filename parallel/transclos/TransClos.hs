@@ -10,6 +10,7 @@ module TransClos where
 
 -- import BinTree
 import Data.List as List
+import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, all, elem)
 import qualified Data.Set
 -- import CircPrgs(nub2)
 
@@ -122,7 +123,7 @@ transcl_set r xs = foldl Data.Set.union Data.Set.empty xs'
                                        is_new ([]) y                              = True
                                        is_new (xs:xss) y | y `Data.Set.member` xs = False
                                                          | otherwise              = is_new xss y
-                                               
+
 
 -- transcl_set (r1_set 444) (Data.Set.fromList [1])
 -- (0.07 secs, 3884380 bytes)

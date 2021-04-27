@@ -1,6 +1,7 @@
 module SumEulerPrimes where
 
 import Data.List
+import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, sum)
 
 sumPhi n = sum (map phiOpt [1..n])
 

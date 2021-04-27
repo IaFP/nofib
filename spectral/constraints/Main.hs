@@ -3,8 +3,8 @@
 	See Proceedings of WAAAPL '99
 -}
 
-import Prelude hiding (Maybe(Just,Nothing))
 import Data.List
+import Prelude hiding (Maybe(Just,Nothing), null, length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, all, elem, notElem)
 import System.Environment
 import Control.Monad (forM_)
 

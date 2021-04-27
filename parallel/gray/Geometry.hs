@@ -62,6 +62,7 @@ module Geometry
     ) where
 
 import Data.List
+import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, elem)
 
 type Coords = (Double,Double,Double)
 

@@ -33,7 +33,9 @@ David J. King & John O'Donnell
 January, 1998
 
 > import System.Environment
+> import Control.Monad (forM_)
 > import Data.List
+> import Prelude hiding (length, or, foldr, maximum, concat, foldl)
 
 > data BinTree a b = Cell a
 >		   | Node b (BinTree a b) (BinTree a b)
@@ -656,8 +658,10 @@ To run (with ghc) for a (8 bit register) circuit over 1000 cycles
 % circ_sim 8 1000
 
 > main :: IO ()
-> main = getArgs >>= \[num_bits, num_cycles] ->
->	 print (run (read num_bits) (read num_cycles))
+> main = forM_ [1..97] $ const $ do
+>   (num_bits:num_cycles:_) <- getArgs
+>   -- We save ourselfs some trouble and don't produce output in the gc variant
+>   return $! (length . show $ (run (read num_bits) (read num_cycles))) `seq` ()
 
 
 > run :: Int -> Int -> [[Boolean]]

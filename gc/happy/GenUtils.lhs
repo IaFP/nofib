@@ -36,6 +36,7 @@ All the code below is understood to be in the public domain.
 
 > import Data.Char  (isAlphaNum)
 > import Data.List
+> import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, elem)
 > import Data.Ix    ( Ix(..) )
 > import Data.Array ( Array, listArray, array, (!) )
 
@@ -177,7 +178,7 @@ Replace $$ with an arbitrary string, being careful to avoid ".." and '.'.
 >   where go code acc =
 >           case code of
 >		[] -> Nothing
->	
+>
 >		'"'  :r    -> case reads code :: [(String,String)] of
 >				 []      -> go r ('"':acc)
 >				 (s,r):_ -> go r (reverse (show s) ++ acc)

@@ -1,6 +1,7 @@
 module ListAux where
 
 import Data.List
+import Prelude hiding (length, or, foldr, maximum, concat, foldl)
 
 
 -- splitting into n parts, and its inverse:

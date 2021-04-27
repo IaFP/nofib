@@ -10,12 +10,12 @@ Here is our mid-section datatype
 
 > module Grammar (
 > 	Name, isEmpty,
->	
+>
 >	Production, Grammar(..), mangler,
->	
+>
 >	LRAction(..), ActionTable, Goto(..), GotoTable, Priority(..),
 >       Assoc(..),
->	
+>
 >	errorName, errorTok, startName, firstStartTok, dummyTok,
 >	eofName, epsilonTok
 >	) where
@@ -29,6 +29,7 @@ Here is our mid-section datatype
 > import Data.Array
 > import Data.Char
 > import Data.List
+> import Prelude hiding (null, length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, elem)
 > import Data.Maybe (fromMaybe)
 
 #ifdef DEBUG
@@ -147,7 +148,7 @@ namespace, which are kept in the Grammar structure.
 In hindsight, this was probably a bad idea.
 
 > startName = "%start" -- with a suffix, like %start_1, %start_2 etc.
-> eofName   = "%eof"			
+> eofName   = "%eof"
 > errorName = "error"
 > dummyName = "%dummy"  -- shouldn't occur in the grammar anywhere
 
@@ -520,7 +521,7 @@ So is this.
 >   where go code acc used =
 >           case code of
 >		[] -> Succeeded (reverse acc, used)
->	
+>
 >		'"'  :r    -> case reads code :: [(String,String)] of
 >				 []      -> go r ('"':acc) used
 >				 (s,r):_ -> go r (reverse (show s) ++ acc) used
@@ -543,7 +544,7 @@ So is this.
 >				 	`parE` \_ -> go r acc used
 >			   	  else go r (reverse (mkHappyVar j) ++ acc)
 >					 (j : used)
->			
+>
 >		c:r  -> go r (c:acc) used
 
 > mkHappyVar n 	= "happy_var_" ++ show n
@@ -565,7 +566,7 @@ So is this.
 
 #endif
 
->	)	
+>	)
 
 > type ActionTable = Array Int{-state-} (Array Int{-terminal#-} LRAction)
 
@@ -586,6 +587,6 @@ So is this.
 
 #endif
 
->	)	
+>	)
 
 > type GotoTable = Array Int{-state-} (Array Int{-nonterminal #-} Goto)

@@ -18,6 +18,7 @@ The code generator.
 
 > import Data.Maybe		( isJust, isNothing )
 > import Data.Char
+> import Prelude hiding (null, length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, elem, notElem)
 > import Data.List
 
 > import Control.Monad.ST

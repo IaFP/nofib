@@ -24,6 +24,7 @@ module Main(main) where
 
 import System.Environment
 import Data.List hiding (foldl', foldl1')
+import Prelude hiding (null, length, or, foldr, maximum, concat, concatMap, foldl, foldr1, foldl1, sum, all, elem)
 
 import ListAux
 import Control.DeepSeq

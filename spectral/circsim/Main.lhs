@@ -35,6 +35,7 @@ January, 1998
 > import System.Environment
 > import Control.Monad (forM_)
 > import Data.List
+> import Prelude hiding (length, or, foldr, maximum, concat, foldl)
 
 > data BinTree a b = Cell a
 >		   | Node b (BinTree a b) (BinTree a b)

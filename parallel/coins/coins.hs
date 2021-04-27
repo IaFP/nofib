@@ -5,6 +5,7 @@ import System.Environment
 import Control.Parallel
 import Control.Parallel.Strategies
 import Control.Applicative
+import Prelude hiding (length, or, foldr, maximum, concat, foldl, foldr1, sum)
 
 -- Rough results, GHC 6.13: (val=777)
 --   V1 (SDM):             2.2s
@@ -93,7 +94,7 @@ pay :: Int -> Int -> [Int] -> [Int] -> [[Int]]
 pay _   0 coins accum   = [accum]
 pay _   val [] _        = []
 pay pri val coins accum =
-    res		
+    res
     where --
           coins'  = dropWhile (>val) coins
           coin_vals = nub coins'
@@ -101,7 +102,7 @@ pay pri val coins accum =
                            ( \ c -> let
                                       new_coins =
                                           ((dropWhile (>c) coins')\\[c])
-                                    in 			
+                                    in
                                       pay (pri-1)
 				          (val-c)
                                           new_coins
@@ -131,7 +132,7 @@ pay1 pri val coins accum = res
                                                coins'
                                           new_accum =
                                             map (\ x'@(c',q') -> if c==c' then (c',q'+1) else x') accum
-                                        in 			
+                                        in
                                       	  pay1 (pri-1)
 				      	      (val-c)
                                       	      new_coins

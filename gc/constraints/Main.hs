@@ -3,20 +3,21 @@
 	See Proceedings of WAAAPL '99
 -}
 
-import Prelude hiding (Maybe(Just,Nothing))
 import Data.List
+import Prelude hiding (Maybe(Just,Nothing), null, length, or, foldr, maximum, concat, foldl, foldr1, foldl1, sum, all, elem, notElem)
 import System.Environment
+import Control.Monad (forM_)
 
 -----------------------------
 -- The main program
 -----------------------------
 
-main = do
- [arg] <- getArgs
- let
-	n = read arg :: Int
-   	try algorithm = print (length (search algorithm (queens n)))
- sequence_ (map try [bt, bm, bjbt, bjbt', fc])
+main = forM_ [1..240] $ const $ do
+  [arg] <- getArgs
+  let
+    n = read arg :: Int
+    try algorithm = print (length (search algorithm (queens n)))
+  sequence_ (map try [bt, bm, bjbt, bjbt', fc])
 
 -----------------------------
 -- Figure 1. CSPs in Haskell.
