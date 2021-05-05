@@ -249,7 +249,9 @@ buildRules nofib@Build{..} = do
         -- TODO: Invoking cabal in the way we do without any package argument fails.
         root <- liftIO $ IO.makeAbsolute buildDepsRoot
         unless (null deps) $ withResource pkgDbResource 1 $
-            cmd_ "cabal" ("--store-dir=" <> root) "v2-install" "--lib" "-w" compiler "--allow-newer" deps ("-j"<> show threads)
+            let project_file = if useHackageHead then "--project-file=nofib.head" else ""
+            in
+            cmd_ "cabal" project_file ("--store-dir=" <> root) "v2-install" "--lib" "-w" compiler "--allow-newer" deps ("-j"<> show threads)
         liftIO $ writeFile out ""
 
     -- Benchmark rules

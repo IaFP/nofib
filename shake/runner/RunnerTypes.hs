@@ -66,6 +66,7 @@ data Nofib
         ,rts_args :: [String]
         ,times :: Int
         ,keepGoing :: Bool
+        ,useHackageHead :: Bool -- ^ Use hackage.head via nofib.head project file
         ,verbosity :: Int -- ^ Default 1
         }
     deriving (Show)
@@ -105,6 +106,7 @@ nofibMode =
     <*> many (option str (long "rts-arg" <> help "Extra arguments to pass to runtime system when running"))
     <*> option auto (long "times" <> short 't' <> value 1 <> help "Number of times to run each test")
     <*> switch (long "keep-going" <> help "Ignore output missmatches")
+    <*> switch (long "head" <> help "Use nofib.head project file for building test dependencies.")
     <*> option auto (long "verbosity" <> short 'v' <> short 'V' <> value 1 <> help "Verbosity, default = 1")
 
 
