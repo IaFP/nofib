@@ -33,7 +33,7 @@ cacheprof  circsim  constraints  fibheaps  gc_bench  happy  hash  lcss  linear  
 
 _make/8.11.0.20200205/gc/cacheprof:
 Arch_x86.hi  Arch_x86.o.result        Arch_x86.o.stats  Generics.hi  Generics.o.result        Generics.o.stats  Main.deps  Main.o         Main.o.results.csv   Main.result
-Arch_x86.o   Arch_x86.o.results.csv   config.txt        Generics.o   Generics.o.results.csv   Main              Main.hi    Main.o.result  Main.o.stats         Main.results.csv 
+Arch_x86.o   Arch_x86.o.results.csv   config.txt        Generics.o   Generics.o.results.csv   Main              Main.hi    Main.o.result  Main.o.stats         Main.results.csv
 
 ...
 ```
@@ -82,3 +82,12 @@ $ cabal new-run nofib-compare -- approach-b.results.csv approach-a.results.csv
 
 nofib-compare supports several different output formats, selectable with the
 `-f` flag, namely: ascii (default), markdown, csv, latex
+
+## Broken tests
+
+Occasionally we have to deal with broken tests. The `--keep-going` flags tries to
+run as many tests as possible even if some of them are broken. This currently only
+allows for ignoring missmatched outputs, not crashes/compilation failures.
+
+There is still the option of listing the non-broken tests explicitly if --keep-going
+doesn't work.

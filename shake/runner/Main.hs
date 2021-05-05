@@ -475,6 +475,7 @@ data RunMode  = ModeRun -- ^ Regular runtime measurement
               -- | Wrap the executable by a call to another executable.
               --
               -- For example perf or valgrind.
+              -- The int is the n'th run
               | ModeWrapped (Int -> [String])
                             (Int -> IO (Measurements Double))
 
