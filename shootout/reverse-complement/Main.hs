@@ -9,7 +9,7 @@ contributed by Louis Wasserman
 
 import Control.Monad
 import Foreign
-import Data.ByteString.Internal
+import Data.ByteString.Internal hiding (inlinePerformIO)
 import System.IO
 import GHC.Exts
 import GHC.IO (IO(..))
