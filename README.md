@@ -19,6 +19,15 @@ If you add a benchmark try to set the problem sizes for
 fast/normal/slow reasonably. [Modes](#modes) lists the recommended brackets for
 each mode.
 
+### Benchmark runtimes
+
+Benchmark should ideally support running in three different modes:
+
+- `fast`: 0.1-0.2s
+- `norm`: 1-2s
+- `slow`: 5-10s
+
+You can look at existing benchmarks for how this is usually achieved.
 ### Benchmark Categories
 
 So you have a benchmark to submit but don't know in which subfolder to put it? Here's some
@@ -70,7 +79,7 @@ Gen 1 heaps just amplifies the problem.
 As a rule of thumb on how to ensure this: Make sure that your benchmark doesn't
 just build up one big data and consume it in a final step, but rather that the
 working set grows and shrinks (e.g. is approximately constant) over the whole
-run of the benchmark. You can ensure this by iterating your main logic `$n` 
+run of the benchmark. You can ensure this by iterating your main logic `$n`
 times (how often depends on your program, but in the ball park of 100-1000).
 You can test stability by plotting productivity curves for your `fast` settings
 with the `prod.py` script attached to #15999.
