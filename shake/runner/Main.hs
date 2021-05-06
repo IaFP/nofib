@@ -48,13 +48,10 @@ ml = Ms.mkLabel
 ---------------------------------------------------------------------
 -- TEST CONFIGURATION - which tests are available to run
 
--- | These are directories that contain tests.
+-- | These are directories that we look into for tests by default.
 testRoots :: [String]
-testRoots = words "imaginary spectral real shootout parallel gc smp"
-
--- | These tests are run by default
-defaultRoots :: [String]
-defaultRoots = words "imaginary spectral real shootout"
+testRoots = words "imaginary spectral real shootout parallel smp"
+            -- Note that we don't run the gc tests by default.
 
 defaultNoFibHcOpts :: [String]
 defaultNoFibHcOpts = words "-O2 -Wno-tabs"
