@@ -10,6 +10,7 @@ import Data.Word
 import GHC.Float (castWord64ToDouble)
 import Text.Printf
 import System.IO (Handle, stdout)
+import System.Environment (getArgs)
 -- position, also color (r,g,b)
 data Vec = Vec {-# UNPACK #-} !Double {-# UNPACK #-} !Double {-# UNPACK #-} !Double
 
@@ -206,6 +207,9 @@ erand48 !t =  do
   writeSTRefU t r'
   pure d
 
+-- Must be called as ./Main <n>
 main :: IO ()
-main = smallpt n (round $ realToFrac n/1.3333) 32
-  where n = 512
+main = do
+  samples <- read . head <$> getArgs
+  let n = 512
+  smallpt n (round $ realToFrac n/1.3333) samples
