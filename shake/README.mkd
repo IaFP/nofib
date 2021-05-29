@@ -22,7 +22,7 @@ The compiler version component of this path can be overridden with the
 
 For instance (run from the root `nofib` directory),
 ```
-$ cabal new-run -- nofib-run --compiler=/path/to/ghc --output=test
+$ cabal v2-run -- nofib-run --compiler=/path/to/ghc --output=test
 ```
 will produce a number of files in `_make/`:
 ```
@@ -83,7 +83,7 @@ structure with `/` being the component delimiter.
 ## Comparing results
 
 ```
-$ cabal new-run nofib-compare -- approach-b.results.csv approach-a.results.csv
+$ cabal v2-run nofib-compare -- approach-b.results.csv approach-a.results.csv
 ```
 
 nofib-compare supports several different output formats, selectable with the
@@ -97,3 +97,16 @@ allows for ignoring missmatched outputs, not crashes/compilation failures.
 
 There is still the option of listing the non-broken tests explicitly if --keep-going
 doesn't work.
+
+## head.hackage
+
+It's often required to use
+[head.hackage](https://gitlab.haskell.org/ghc/head.hackage)
+to compile the dependencies with development GHC versions. This is possible
+with `--head` flag.
+
+Remember to update the `head.hackage with
+
+```
+cabal v2-update --project-file=nofib.head head.hackage.ghc.haskell.org
+```
