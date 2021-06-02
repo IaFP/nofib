@@ -63,12 +63,12 @@ args =
 
 renderGitLabMarkdown :: (rh -> String) -> (ch -> String) -> (a -> String) -> Table rh ch a -> String
 renderGitLabMarkdown renderRow renderCol renderCell (Table rows cols cells) =
-    unlines $ [header, headerSep] ++ cells'
+    unlines $ [joinCols header, joinCols headerSep] ++ cells'
   where
     prepend x = (x :)
     joinCols xs = "| " ++ intercalate " | " xs ++ " |"
-    header = joinCols $ prepend "" $ map renderRow (headerContents rows)
-    headerSep = joinCols $ map (const " -------- ") header
+    header = prepend "" $ map renderCol (headerContents cols)
+    headerSep = map (const " -------- ") header
     emphasize x = "*"++x++"*"
     cells' = zipWith (\rh row -> joinCols
                                  $ prepend (emphasize $ renderRow rh)
