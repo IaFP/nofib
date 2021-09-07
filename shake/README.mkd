@@ -108,7 +108,7 @@ supports this conveniently via the `--head` flag.
 First, update the `head.hackage` package index with:
 
 ```
-cabal v2-update --project-file=nofib.head head.hackage.ghc.haskell.org
+cabal v2-update --project-file=cabal.project.head-hackage head.hackage.ghc.haskell.org
 ```
 
 Now run `nofib-run` as usual, adding the `--head` flag to your command-line.
