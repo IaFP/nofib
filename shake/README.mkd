@@ -100,13 +100,15 @@ doesn't work.
 
 ## head.hackage
 
-It's often required to use
-[head.hackage](https://gitlab.haskell.org/ghc/head.hackage)
-to compile the dependencies with development GHC versions. This is possible
-with `--head` flag.
+It's often necessary to use the
+[head.hackage](https://gitlab.haskell.org/ghc/head.hackage) patchset
+to compile the dependencies with development GHC versions. `nofib-run`
+supports this conveniently via the `--head` flag.
 
-Remember to update the `head.hackage with
+First, update the `head.hackage` package index with:
 
 ```
 cabal v2-update --project-file=nofib.head head.hackage.ghc.haskell.org
 ```
+
+Now run `nofib-run` as usual, adding the `--head` flag to your command-line.
