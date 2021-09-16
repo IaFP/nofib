@@ -260,7 +260,7 @@ main = do
 
     -- compile-time metrics
     tabulate "compiler allocations"  $ objectCompilerRtsStats <* "bytes allocated"
-    tabulate "compiler mutator time" $ objectCompilerRtsStats <* "mutator_cpu_seconds"
+    tabulate "compiler mutator time" $ objectCompilerRtsStats <* ("mutator_cpu_seconds" <|> "mut_cpu_seconds")
     tabulate "compiler GC (cpu) time"      $ objectCompilerRtsStats <* "GC_cpu_seconds"
     tabulate "compiler GC (wall) time"      $ objectCompilerRtsStats <* "GC_wall_seconds"
     tabulate "executable size"       $ testName <* "executable size"
