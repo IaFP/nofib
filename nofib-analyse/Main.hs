@@ -17,7 +17,8 @@ import System.Exit      ( exitWith, ExitCode(..) )
 import Control.Monad
 import Data.Maybe       ( isNothing )
 import System.IO
-import Data.List
+import Data.Foldable
+import Data.List (intersperse, unzip4, transpose)
 
 -----------------------------------------------------------------------------
 -- Top level stuff
