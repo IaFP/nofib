@@ -1,15 +1,17 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE TupleSections #-}
+{-# LANGUAGE ViewPatterns #-}
 module Main (main) where
 import Control.Monad
 import Control.Monad.ST
+import Data.List(foldl')
 import Data.Bits
 import Data.STRef.Unboxed
 import Data.Word
 import GHC.Float (castWord64ToDouble)
 import Text.Printf
-import System.IO (Handle, stdout)
+import System.IO (Handle, stdout, hPutStr)
 import System.Environment (getArgs)
 -- position, also color (r,g,b)
 data Vec = Vec {-# UNPACK #-} !Double {-# UNPACK #-} !Double {-# UNPACK #-} !Double
@@ -144,7 +146,7 @@ radiance ray@(Ray o d) depth xi = case intersects ray of
                   else return e
       else continue c
 
-smallpt :: Int -> Int -> Int -> IO ()
+smallpt :: Int -> Int -> Int -> IO [Vec]
 smallpt w h nsamps = do
   let samps = nsamps
       org = Vec 50 52 295.6
@@ -167,7 +169,7 @@ smallpt w h nsamps = do
               pure $ (r `addv` (rad `mulvs` (1 / fromIntegral samps)))
             pure $ ci `addv` (Vec (clamp rr) (clamp rg) (clamp rb) `mulvs` 0.25)
 
-  writeImage stdout (w,h) img
+  return img
 
 writeImage :: Handle -> (Int, Int) -> [Vec] -> IO ()
 writeImage hdl (w,h) img = do
@@ -207,9 +209,18 @@ erand48 !t =  do
   writeSTRefU t r'
   pure d
 
--- Must be called as ./Main <n>
+hashImage :: [Vec] -> String
+hashImage vecs = show $ foldl' (\n (Vec a b c) -> n + a + b + c) 0 vecs
+
+-- Must be called as ./Main img/hash <n>
 main :: IO ()
 main = do
-  samples <- read . head <$> getArgs
+  [mode, read -> samples] <- getArgs
   let n = 512
-  smallpt n (round $ realToFrac n/1.3333) samples
+      w = n
+      h = (round $ realToFrac n/1.3333)
+  vec <- smallpt w h samples
+  if mode == "img"
+    then writeImage stdout (w, h) vec
+    else  hPutStr stdout (hashImage vec)
+
