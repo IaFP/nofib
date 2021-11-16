@@ -1,4 +1,5 @@
->{-# LANGUAGE FlexibleContexts #-}
+>{-# LANGUAGE FlexibleContexts, RankNTypes #-}
+>{-# LANGUAGE DatatypeContexts #-}
 
     Inferred type for 'getMin' has a constraint (MArray a (MyMaybe t) m)
     An alternative fix (better, but less faithful to backward perf
@@ -148,12 +149,13 @@ To be able to find the minimum element quickly, we keep the tree with the
 minimum root outside of the bag.  In addition, at the top level of each heap,
 we store the total size of the heap.
 
->data FibHeap a = EmptyFH | FH Int (TaggedTree a) (Forest a)
+>data Ord a => FibHeap a = EmptyFH | FH Int (TaggedTree a) (Forest a)
 
                          --------------------
 
 Now, the following operations are trivial.
 
+>emptyFH :: FibHeap a
 >emptyFH = EmptyFH
 >
 >isEmptyFH EmptyFH = True
@@ -193,6 +195,7 @@ In the first implementation, there are three steps.
      two trees and reinsert the new larger tree.
   3. Transfer the trees into a bag, keeping track of the minimum tree.
 
+>deleteMinFH :: FibHeap b -> FibHeap b
 >deleteMinFH EmptyFH = error "deleteMinFH EmptyFH"
 >deleteMinFH (FH 1 tt f) = EmptyFH
 >deleteMinFH (FH n tt f) =
@@ -212,11 +215,22 @@ in the same pattern as the bits of n-1.  Since we know that the
 highest order bit of n-1 is one, we know that there is a tree in
 the highest slot of the array.
 
+-- >    getMin :: forall m s b. (Monad m) => ST s Int (MyMaybe (Tree b))
+-- >                    -> m ((Int, Tree b), Bag (Int, Tree b))
+
 >    getMin a =
 >        readArray a d >>= \e ->
 >        case e of
 >          Zero  -> error "must be One" -- since array is filled as bits of n-1
 >          One t -> getMin' a d t EmptyBag 0
+
+-- >    getMin' :: forall m s b. Monad m => STArray s Int (MyMaybe (Tree b))
+-- >                   -> Int
+-- >                   -> Tree b
+-- >                   -> Bag (Int, Tree b)
+-- >                   -> Int
+-- >                   -> m ((Int, Tree b), Bag (Int, Tree b))
+
 >    getMin' a mini mint b i =
 >        if i >= d then
 >          return ((mini, mint),b)

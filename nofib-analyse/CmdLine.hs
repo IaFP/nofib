@@ -28,7 +28,7 @@ cmdline_errors :: [String]
 (flags, other_args, cmdline_errors) = getOpt Permute argInfo args
 
 default_tooquick_threshold, tooquick_threshold :: Float
-default_tooquick_threshold = 0.2 {- secs -}
+default_tooquick_threshold = 0.1 {- secs -}
 tooquick_threshold
  = case [ i | OptIgnoreSmallTimes i <- flags ] of
         [] -> default_tooquick_threshold

@@ -1,5 +1,6 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE StandaloneDeriving #-}
 module Main( main ) where
 
 -- From Mark: marku@cs.waikato.ac.nz [Nov 2001]
@@ -43,6 +44,7 @@ import System.Environment
 import Control.Monad.Trans.State.Strict
 import Data.Functor.Identity
 import Control.Monad (replicateM_)
+import GHC.Types(Total)
 
 main :: IO ()
 main = replicateM_ 100 $ do { mainSimple ; mainMonad }
@@ -167,7 +169,11 @@ apply a b         = error ("bad application: " ++ pp a ++
 ----------------------------------------------------------------------
 -- A trivial monad so that we can use monad syntax.
 newtype Id a = Id (Identity a)
-    deriving (Applicative, Functor, Monad)
+
+instance Total Id
+deriving instance Applicative Id
+deriving instance Functor Id
+deriving instance Monad Id
 
 instance Show a => Show (Id a) where
     show (Id i) = show (runIdentity i)

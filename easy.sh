@@ -120,7 +120,7 @@ else
 	make boot mode=$mode HC=$OLD_HC
 
 	echo '\033]0;NOFIB: old, benchmarking...\007'
-	make mode=$mode HC=$OLD_HC 2>&1 | tee $OLD_OUTPUT
+	make mode=$mode all HC=$OLD_HC 2>&1 | tee $OLD_OUTPUT
 fi
  
 # Run with new ghc
@@ -139,7 +139,7 @@ else
 	make boot mode=$mode HC=$NEW_HC
 
 	echo '\033]0;NOFIB: new, benchmarking...\007'
-	make mode=$mode HC=$NEW_HC 2>&1 | tee $NEW_OUTPUT
+	make mode=$mode all HC=$NEW_HC HC_OPTS=-XPartialTypeConstructors 2>&1 | tee $NEW_OUTPUT
 fi
 
 # Done

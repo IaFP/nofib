@@ -42,7 +42,7 @@ endif
 NoFibSubDirs = imaginary spectral real shootout
 
 # Haskell compiler options for nofib
-NoFibHcOpts = -O2 -Wno-tabs
+NoFibHcOpts = -O2 -Wno-tabs -XPartialTypeConstructors -XConstrainedClassMethods -XTypeOperators -XTypeFamilies -XRankNTypes
 
 # Number of times to run each program
 NoFibRuns = 5
@@ -58,9 +58,9 @@ SRC_HC_OPTS += $(NoFibHcOpts) -Rghc-timing
 
 ifeq "$(WithNofibHc)" ""
 
-STAGE1_GHC := $(abspath $(TOP)/../inplace/bin/ghc-stage1)
-STAGE2_GHC := $(abspath $(TOP)/../inplace/bin/ghc-stage2)
-STAGE3_GHC := $(abspath $(TOP)/../inplace/bin/ghc-stage3)
+STAGE1_GHC := $(abspath $(TOP)/../_build/stage1/bin/ghc)
+STAGE2_GHC := $(abspath $(TOP)/../_build/stage2/bin/ghc)
+STAGE3_GHC := $(abspath $(TOP)/../_build/stage3/bin/ghc)
 
 ifneq "$(wildcard $(STAGE1_GHC) $(STAGE1_GHC).exe)" ""
 

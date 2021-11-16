@@ -209,8 +209,8 @@ checkTimes prog results = do
                                    ++ " results for " ++ prog
                                    ++ ": " ++ show ts)
            | otherwise = return ()
-           where strange t = any (\r -> time_ok r && r / t > 1.4) ts
-                        -- looks for times that are >40% smaller than
+           where strange t = any (\r -> time_ok r && r / t > 1.5) ts
+                        -- looks for times that are >50% smaller than
                         -- any other.
 
 

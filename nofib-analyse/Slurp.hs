@@ -4,14 +4,14 @@
 --
 -----------------------------------------------------------------------------
 
-module Slurp (Status(..), Results(..), ResultTable, parse_log) where
+module Slurp (Status(..), Results(..), ResultTable, parse_log, chunk_log, process_chunk, combine_results) where
 
 import Control.Monad
 import qualified Data.Map as Map
 import Data.Map (Map)
 import Data.List (isPrefixOf)
 import Text.Regex
--- import Debug.Trace
+import Debug.Trace
 
 -----------------------------------------------------------------------------
 -- This is the structure into which we collect our results:
@@ -26,6 +26,7 @@ data Status
         | Exit Int
         | WrongStdout
         | WrongStderr
+        deriving Show
 
 data Results = Results {
         compile_time    :: Map String Float,
@@ -55,7 +56,7 @@ data Results = Results {
         run_status      :: Status,
         compile_status  :: Status,
         total_memory    :: [Integer]
-        }
+        } deriving Show
 
 emptyResults :: Results
 emptyResults = Results {
@@ -365,6 +366,7 @@ parse_run_time :: String -> [String] -> Results -> Status
 parse_run_time _ [] _ NotDone = []
 parse_run_time prog [] res ex = [(prog, res{run_status=ex})]
 parse_run_time prog (l:ls) res ex =
+
         case ghc1_re l of {
            Just (allocations, _, _, _, _, _, initialisation, init_elapsed, mut, mut_elapsed, gc, gc_elapsed) ->
                 got_run_result allocations initialisation init_elapsed mut mut_elapsed gc gc_elapsed [] [] [] [] [] [] []
@@ -444,10 +446,12 @@ parse_run_time prog (l:ls) res ex =
                 parse_run_time prog ls res ex;
 
         }}}}}}}}}}}
+
   where
   got_run_result allocations initialisation init_elapsed mut mut_elapsed gc gc_elapsed gc0_count gc0 gc0_elapsed gc1_count gc1 gc1_elapsed bal gc_work' instrs' mem_rs mem_ws cache_misses' in_use
-      = -- trace ("got_run_result: " ++ initialisation ++ ", " ++ mut ++ ", " ++ gc) $
-        let
+      = -- trace ("got_run_result: " ++ (show initialisation) ++ ", " ++ (show mut) ++ ", " ++ (show gc)) $
+      parse_run_time prog ls res' Success
+        where
           time = initialisation + mut + gc
           etime = init_elapsed + mut_elapsed + gc_elapsed
           res' = combine2Results res
@@ -473,8 +477,6 @@ parse_run_time prog (l:ls) res ex =
                                         run_status = Success,
                                         total_memory = in_use
                                 }
-        in
-        parse_run_time prog ls res' Success
 
 combineRunResult :: Status -> Status -> Status
 combineRunResult OutOfHeap  _           = OutOfHeap

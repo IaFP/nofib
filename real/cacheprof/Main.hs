@@ -1,4 +1,3 @@
-
 {------------------------------------------------------------------------}
 {--- An assembly code annotator for gcc >= 2.7.X on x86-linux-2.X     ---}
 {---                                                      CacheAnn.hs ---}
@@ -1488,6 +1487,7 @@ doFile prof_level args input_text
                  ifopt [0,1,2] ddump_synth      with_synth
                  ifopt [0,1,2] ddump_peephole   peepholed
 
+         ifopt :: forall a. (PP a) => [Int] -> String -> [a] -> IO ()
          ifopt valid_levels flag stuff
             | prof_level `elem` valid_levels
               && flag `elem` args

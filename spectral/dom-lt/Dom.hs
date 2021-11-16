@@ -48,7 +48,7 @@ import qualified Data.IntSet as IS
 
 import Control.Monad
 import Control.Monad.ST.Strict
-
+import GHC.Types (Total)
 import Data.Array.ST
 import Data.Array.Base
   (unsafeNewArray_
@@ -546,6 +546,9 @@ renum from = (\(_,m,g)->(g,m))
 -----------------------------------------------------------------------------
 
 newtype S z s a = S {unS :: forall o. (a -> s -> ST z o) -> s -> ST z o}
+
+instance Total (S z s)
+
 instance Functor (S z s) where
   fmap f (S g) = S (\k -> g (k . f))
 instance Monad (S z s) where
