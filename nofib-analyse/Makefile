@@ -4,7 +4,7 @@ include $(TOP)/mk/boilerplate.mk
 PROG = nofib-analyse
 
 $(PROG): *.hs
-	cabal v2-build -w $(BOOT_HC)
+	cabal v2-build --enable-library-profiling -w $(BOOT_HC)
 	cp $$(cabal v2-exec -w $(BOOT_HC) -- which $(PROG)) $(PROG)
 
 all :: $(PROG)

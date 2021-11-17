@@ -42,7 +42,10 @@ endif
 NoFibSubDirs = imaginary spectral real shootout
 
 # Haskell compiler options for nofib
-NoFibHcOpts = -O2 -Wno-tabs -XPartialTypeConstructors -XConstrainedClassMethods -XTypeOperators -XTypeFamilies -XRankNTypes
+NoFibHcOpts = -XPartialTypeConstructors -XConstrainedClassMethods \
+              -XTypeOperators -XTypeFamilies -XRankNTypes \
+              -prof -fprof-auto -rtsopts -O2 -Wno-tabs
+# -fno-specialise -fno-cross-module-specialise -fno-spec-constr
 
 # Number of times to run each program
 NoFibRuns = 5
