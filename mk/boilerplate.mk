@@ -58,9 +58,9 @@ SRC_HC_OPTS += $(NoFibHcOpts) -Rghc-timing
 
 ifeq "$(WithNofibHc)" ""
 
-STAGE1_GHC := $(abspath $(TOP)/../inplace/bin/ghc-stage1)
-STAGE2_GHC := $(abspath $(TOP)/../inplace/bin/ghc-stage2)
-STAGE3_GHC := $(abspath $(TOP)/../inplace/bin/ghc-stage3)
+STAGE1_GHC := $(abspath $(TOP)/../_build/bin/ghc-stage1)
+STAGE2_GHC := $(abspath $(TOP)/../_build/bin/ghc-stage2)
+STAGE3_GHC := $(abspath $(TOP)/../_build/bin/ghc-stage3)
 
 ifneq "$(wildcard $(STAGE1_GHC) $(STAGE1_GHC).exe)" ""
 
